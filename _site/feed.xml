@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>Eduardo Colabardini</title>
+		<link>//ecolabardini.github.io</link>
+		<atom:link href="//ecolabardini.github.io/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Riak, Docker &amp; Strong Consistency</title>
+        <description>
+</description>
+				<pubDate>Sun, 17 Apr 2016 19:49:00 -0300</pubDate>
+				<link>//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/</link>
+				<guid isPermaLink="true">//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/</guid>
+			</item>
+		
+			<item>
+				<title>Bloom filter implementation in Erlang and Redis</title>
+        <description>
+</description>
+				<pubDate>Mon, 21 Dec 2015 10:31:00 -0200</pubDate>
+				<link>//ecolabardini.github.io/2015/12/21/bloom-filter-implementation-in-erlang/</link>
+				<guid isPermaLink="true">//ecolabardini.github.io/2015/12/21/bloom-filter-implementation-in-erlang/</guid>
+			</item>
+		
+			<item>
+				<title>Playing with multicast groups in Java</title>
+        <description>
+</description>
+				<pubDate>Tue, 01 Dec 2015 10:13:00 -0200</pubDate>
+				<link>//ecolabardini.github.io/2015/12/01/playing-with-multicast-groups-in-java/</link>
+				<guid isPermaLink="true">//ecolabardini.github.io/2015/12/01/playing-with-multicast-groups-in-java/</guid>
+			</item>
+		
+			<item>
+				<title>My docker whale of fortune</title>
+        <description>
+</description>
+				<pubDate>Tue, 24 Nov 2015 09:57:00 -0200</pubDate>
+				<link>//ecolabardini.github.io/2015/11/24/my-docker-whale-of-fortune/</link>
+				<guid isPermaLink="true">//ecolabardini.github.io/2015/11/24/my-docker-whale-of-fortune/</guid>
+			</item>
+		
+			<item>
+				<title>Versioning web-services with Java EE</title>
+        <description>
+</description>
+				<pubDate>Sun, 22 Nov 2015 22:52:00 -0200</pubDate>
+				<link>//ecolabardini.github.io/2015/11/22/versioning-web-services-with-java-ee/</link>
+				<guid isPermaLink="true">//ecolabardini.github.io/2015/11/22/versioning-web-services-with-java-ee/</guid>
+			</item>
+		
+	</channel>
+</rss>

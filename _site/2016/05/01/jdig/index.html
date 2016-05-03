@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JDig API</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="alternate" type="application/rss+xml" title="RSS Feed for Eduardo Colabardini" href="/feed.xml" />
+  <!-- Begin Jekyll SEO tag v1.4.0 -->
+<title>JDig API - Eduardo Colabardini</title>
+<meta property="og:title" content="JDig API" />
+<meta name="description" content="JDIG - Java library for DNS queries" />
+<meta property="og:description" content="JDIG - Java library for DNS queries" />
+<link rel="canonical" href="//ecolabardini.github.io/2016/05/01/jdig/" />
+<meta property="og:url" content="//ecolabardini.github.io/2016/05/01/jdig/" />
+<meta property="og:site_name" content="Eduardo Colabardini" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-05-01T19:49:00-03:00" />
+<link rel="prev" href="//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/" title="Riak, Docker &amp; Strong Consistency" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@ecolabardini" />
+<meta name="twitter:creator" content="@Eduardo Colabardini" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "JDig API",
+    "datePublished": "2016-05-01T19:49:00-03:00",
+    "description": "JDIG - Java library for DNS queries",
+    "url": "//ecolabardini.github.io/2016/05/01/jdig/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+</head>
+<body>
+  <div class="container">
+    <header class="masthead">
+  <h1 class="masthead-title--small">
+    <a href="/">Eduardo Colabardini</a>
+  </h1>
+</header>
+<div class="content post">
+  <h1 class="post-title">JDig API</h1>
+  <div class="post-date">
+    <time>01 May 2016</time>
+  </div>
+  <h1 id="jdig---java-library-for-dns-queries">JDIG - Java library for DNS queries</h1>
+
+<p>JDIG is a simple Java library that can be added to your project in order to provide an easy way to do DNS queries.</p>
+
+<p>It also support DNS-based Blackhole List (DNSBL) / Real-time Blackhole List (RBL) queries. <a href="https://en.wikipedia.org/wiki/DNSBL">What is this?</a></p>
+
+<p>It is built with:
+ - Java 7
+ - Maven
+ - SLF4J
+ - JUnit</p>
+
+<h3 id="current-version">Current version</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0.0.1
+</code></pre>
+</div>
+
+<h3 id="how-to-add-to-my-project">How to add to my project</h3>
+
+<p><a href="http://mvnrepository.com/artifact/com.github.ecolabardini/jdig/0.0.1">http://mvnrepository.com/artifact/com.github.ecolabardini/jdig/0.0.1</a></p>
+
+<h3 id="suported-dns-queries">Suported DNS queries</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>A, NS, MX, SRV, TXT, CNAME or Type.any()
+</code></pre>
+</div>
+
+<h3 id="examples">Examples</h3>
+
+<p>The DnsService object can be constructed with several arguments, please see the examples below or check the javadoc for full explanation.</p>
+
+<h4 id="example---simple-dns-query">Example - Simple DNS query</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.jdig.model.DnsEntry</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.jdig.model.Type</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.jdig.service.DnsService</span><span class="o">;</span>
+
+<span class="o">(...)</span>
+
+<span class="c1">// Simple DnsService</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">DnsEntry</span><span class="o">&gt;</span> <span class="n">entries</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DnsService</span><span class="o">().</span><span class="na">lookup</span><span class="o">(</span><span class="s">"google.com"</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">any</span><span class="o">());</span>
+
+</code></pre>
+</div>
+
+<h4 id="example---query-at-specific-dns-server">Example - Query at specific DNS Server</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="o">(...)</span>
+
+<span class="c1">// Query at Google DNS Servers - 8.8.8.8</span>
+<span class="c1">// The port can also be provided, e.g.: 8.8.8.8:53</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">DnsEntry</span><span class="o">&gt;</span> <span class="n">entries</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DnsService</span><span class="o">(</span><span class="s">"8.8.8.8"</span><span class="o">).</span><span class="na">lookup</span><span class="o">(</span><span class="s">"google.com"</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">MX</span><span class="o">);</span>
+
+</code></pre>
+</div>
+
+<h4 id="example---specific-properties-for-initialdircontext">Example - Specific properties for InitialDirContext</h4>
+
+<p>JDIG uses the underlying JNDI directory service so you can provide your own environment properties, e.g.:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Properties</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.naming.Context</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.jdig.model.DnsEntry</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.jdig.model.Type</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.jdig.service.DnsService</span><span class="o">;</span>
+
+<span class="o">(...)</span>
+
+<span class="n">Properties</span> <span class="n">environment</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="o">();</span>
+<span class="n">environment</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">PROVIDER_URL</span><span class="o">,</span> <span class="s">"dns://8.8.8.8:53"</span><span class="o">);</span>
+<span class="n">environment</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">INITIAL_CONTEXT_FACTORY</span><span class="o">,</span> <span class="s">"com.sun.jndi.dns.DnsContextFactory"</span><span class="o">);</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">DnsEntry</span><span class="o">&gt;</span> <span class="n">entries</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DnsService</span><span class="o">(</span><span class="n">environment</span><span class="o">).</span><span class="na">lookup</span><span class="o">(</span><span class="s">"google.com"</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">MX</span><span class="o">);</span>
+
+</code></pre>
+</div>
+
+<h4 id="example---dnsbl-query">Example - DNSBL query</h4>
+
+<p>This queries are provided by the <code class="highlighter-rouge">blackListLookup()</code> method. Note that the DNSBL list is a mandatory argument.</p>
+
+<p>For DNSBL lists, <a href="https://en.wikipedia.org/wiki/Comparison_of_DNS_blacklists">click here</a>.</p>
+
+<p>In the example below, we are checking if the IP address 1.2.3.4 is in the <a href="http://www.sorbs.net/">SORBS</a> list.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="o">(...)</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">DnsEntry</span><span class="o">&gt;</span> <span class="n">blacklistLookup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DnsService</span><span class="o">().</span><span class="na">blacklistLookup</span><span class="o">(</span><span class="s">"1.2.3.4"</span><span class="o">,</span> <span class="s">"dnsbl.sorbs.net"</span><span class="o">);</span>
+</code></pre>
+</div>
+
+<p>To understand SORBS return codes, check <a href="http://www.sorbs.net/using.shtml">Using SORBS</a>.</p>
+
+<p>Note that each list has its own return codes so you should check their webpages.</p>
+
+<h4 id="contributing">Contributing</h4>
+
+<p>Please contact me if you have any ideas, suggestions or, even better, you want to collaborate on this project!</p>
+
+<h4 id="license">License</h4>
+
+<p>This library is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.</p>
+
+</div>
+
+  </div>
+</body>
+</html>

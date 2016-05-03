@@ -7,9 +7,102 @@
 		
 			<item>
 				<title>Riak, Docker &amp; Strong Consistency</title>
-        <description>&lt;p&gt;Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from &lt;a href=&quot;http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf&quot;&gt;Amazon’s Dynamo paper&lt;/a&gt; with heavy influence from the &lt;a href=&quot;https://en.wikipedia.org/wiki/CAP_Theorem&quot;&gt;CAP&lt;/a&gt; theorem. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Riak&quot;&gt;Wikipedia&lt;/a&gt;)&lt;/p&gt;
+        <description>&lt;p&gt;Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from &lt;a href=&quot;http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf&quot; target=&quot;_blank&quot;&gt;Amazon’s Dynamo paper&lt;/a&gt; with heavy influence from the &lt;a href=&quot;https://en.wikipedia.org/wiki/CAP_Theorem&quot; target=&quot;_blank&quot;&gt;CAP&lt;/a&gt; theorem. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Riak&quot; target=&quot;_blank&quot;&gt;Wikipedia&lt;/a&gt;)&lt;/p&gt;
 
-&lt;p&gt;Riak allows you to create buckets that provide &lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot;&gt;strong consistency&lt;/a&gt; guarantees for the data stored within them, enabling you to use Riak as a CP system (consistent plus partition tolerant) for all of the data in that bucket. You can store just some of your data in strongly consistent buckets or all of your data, depending on your use case. Strong consistency was added to complement Riak’s standard &lt;a href=&quot;https://en.wikipedia.org/wiki/Eventual_consistency&quot;&gt;eventually consistent&lt;/a&gt;, high availability mode. (&lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot;&gt;Basho&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Riak allows you to create buckets that provide &lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot; target=&quot;_blank&quot;&gt;strong consistency&lt;/a&gt; guarantees for the data stored within them, enabling you to use Riak as a CP system (consistent plus partition tolerant) for all of the data in that bucket. You can store just some of your data in strongly consistent buckets or all of your data, depending on your use case. Strong consistency was added to complement Riak’s standard &lt;a href=&quot;https://en.wikipedia.org/wiki/Eventual_consistency&quot; target=&quot;_blank&quot;&gt;eventually consistent&lt;/a&gt;, high availability mode. (&lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot; target=&quot;_blank&quot;&gt;Basho&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;In this blog post I’ll show you how to quickly run five Riak nodes using Docker with strong consistency enabled (I’m using Ubuntu 14.04.4 LTS).&lt;/p&gt;
+
+&lt;p&gt;If you don’t have Docker installed, please follow this tutorial: &lt;a href=&quot;https://docs.docker.com/linux/step_one/&quot; target=&quot;_blank&quot;&gt;Install Docker&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Building the Riak Docker image (thanks Hector Castro):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/hectcastro/docker-riak.git
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;docker-riak &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make build
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Running a 5 node cluster with strong consistency enabled:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DOCKER_HOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;unix:///var/run/docker.sock&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DOCKER_RIAK_AUTOMATIC_CLUSTERING&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1 &lt;span class=&quot;nv&quot;&gt;DOCKER_RIAK_CLUSTER_SIZE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5 &lt;span class=&quot;nv&quot;&gt;DOCKER_RIAK_STRONG_CONSISTENCY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;on make start-cluster
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You can get the nodes IP addresses with the following command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;make &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;-cluster | egrep -A6 &lt;span class=&quot;s2&quot;&gt;&quot;ring_members&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Connect to a Riak Docker instance to create a strongly consistent bucket type:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; -it riak01 bash
+riak-admin bucket-type create strongly_consistent &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;
+  &lt;span class=&quot;s1&quot;&gt;&#39;{&quot;props&quot;:{&quot;consistent&quot;:true}}&#39;&lt;/span&gt;
+riak-admin bucket-type activate strongly_consistent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;From now on the cluster is ready to be used. Let’s perform some CRUD operations!
+Insert operation with key “hello” and value “world”:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -X PUT &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -H &lt;span class=&quot;s2&quot;&gt;&quot;Content-type: text/plain&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -d &lt;span class=&quot;s2&quot;&gt;&quot;world&quot;&lt;/span&gt;
+
+&amp;lt; HTTP/1.1 204 No Content
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Fetching the key “hello” from another Riak node:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -v 172.17.0.3:8098/types/strongly_consistent/buckets/test/keys/hello
+
+&amp;lt; HTTP/1.1 200 OK 
+&amp;lt; X-Riak-Vclock: a85hYGBgzGBKYWBJLU4tzGDKY2XgZwQKAendfh0X+LIA
+world
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Strongly consistent buckets cannot allow siblings by definition, and so all writes to existing keys must include a context with the object. If you attempt a write to a non-empty key without including causal context, you will receive the following error:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -X PUT &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -H &lt;span class=&quot;s2&quot;&gt;&quot;Content-type: text/plain&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -d &lt;span class=&quot;s2&quot;&gt;&quot;hell&quot;&lt;/span&gt;
+
+&amp;lt; HTTP/1.1 412 Precondition Failed 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Update using context (X-Riak-Vclock header):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -v 172.17.0.4:8098/types/strongly_consistent/buckets/test/keys/hello &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -X PUT &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -H &lt;span class=&quot;s2&quot;&gt;&quot;Content-type: text/plain&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -H &lt;span class=&quot;s2&quot;&gt;&quot;X-Riak-Vclock: a85hYGBgzGBKYWBJLU4tzGDKY2XgZwQKAendfh0X+LIA&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -d &lt;span class=&quot;s2&quot;&gt;&quot;darling&quot;&lt;/span&gt;
+
+&amp;lt; HTTP/1.1 204 No Content
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Finally, to stop the cluster execute the following:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;make stop cluster
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://vimeo.com/51973001&quot; target=&quot;_blank&quot;&gt;Bringing Consistency to Riak - Joseph Blomstedt, RICON2012&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot; target=&quot;_blank&quot;&gt;Strong Consistency&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://basho.com/posts/technical/riak-quick-start-with-docker&quot; target=&quot;_blank&quot;&gt;Riak Quick Start with Docker&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/hectcastro/docker-riak&quot; target=&quot;_blank&quot;&gt;A Docker project to bring up a local Riak cluster&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
 				<pubDate>Sun, 17 Apr 2016 19:49:00 -0300</pubDate>
 				<link>//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/</link>

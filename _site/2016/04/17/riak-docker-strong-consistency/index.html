@@ -10,8 +10,8 @@
   <!-- Begin Jekyll SEO tag v1.4.0 -->
 <title>Riak, Docker &amp; Strong Consistency - Eduardo Colabardini</title>
 <meta property="og:title" content="Riak, Docker &amp; Strong Consistency" />
-<meta name="description" content="" />
-<meta property="og:description" content="" />
+<meta name="description" content="Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from Amazon’s Dynamo paper with heavy influence from the CAP theorem. (Wikipedia)" />
+<meta property="og:description" content="Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from Amazon’s Dynamo paper with heavy influence from the CAP theorem. (Wikipedia)" />
 <link rel="canonical" href="//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/" />
 <meta property="og:url" content="//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/" />
 <meta property="og:site_name" content="Eduardo Colabardini" />
@@ -27,7 +27,7 @@
     "@type": "BlogPosting",
     "headline": "Riak, Docker &amp; Strong Consistency",
     "datePublished": "2016-04-17T19:49:00-03:00",
-    "description": "",
+    "description": "Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from Amazon’s Dynamo paper with heavy influence from the CAP theorem. (Wikipedia)",
     "url": "//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/"
   }
 </script>
@@ -45,7 +45,9 @@
   <div class="post-date">
     <time>17 Apr 2016</time>
   </div>
-  
+  <p>Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from <a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Amazon’s Dynamo paper</a> with heavy influence from the <a href="https://en.wikipedia.org/wiki/CAP_Theorem">CAP</a> theorem. (<a href="https://en.wikipedia.org/wiki/Riak">Wikipedia</a>)</p>
+
+<p>Riak allows you to create buckets that provide <a href="http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/">strong consistency</a> guarantees for the data stored within them, enabling you to use Riak as a CP system (consistent plus partition tolerant) for all of the data in that bucket. You can store just some of your data in strongly consistent buckets or all of your data, depending on your use case. Strong consistency was added to complement Riak’s standard <a href="https://en.wikipedia.org/wiki/Eventual_consistency">eventually consistent</a>, high availability mode. (<a href="http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/">Basho</a>)</p>
 
 </div>
 

@@ -7,7 +7,9 @@
 		
 			<item>
 				<title>Riak, Docker &amp; Strong Consistency</title>
-        <description>
+        <description>&lt;p&gt;Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from &lt;a href=&quot;http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf&quot;&gt;Amazon’s Dynamo paper&lt;/a&gt; with heavy influence from the &lt;a href=&quot;https://en.wikipedia.org/wiki/CAP_Theorem&quot;&gt;CAP&lt;/a&gt; theorem. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Riak&quot;&gt;Wikipedia&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Riak allows you to create buckets that provide &lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot;&gt;strong consistency&lt;/a&gt; guarantees for the data stored within them, enabling you to use Riak as a CP system (consistent plus partition tolerant) for all of the data in that bucket. You can store just some of your data in strongly consistent buckets or all of your data, depending on your use case. Strong consistency was added to complement Riak’s standard &lt;a href=&quot;https://en.wikipedia.org/wiki/Eventual_consistency&quot;&gt;eventually consistent&lt;/a&gt;, high availability mode. (&lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot;&gt;Basho&lt;/a&gt;)&lt;/p&gt;
 </description>
 				<pubDate>Sun, 17 Apr 2016 19:49:00 -0300</pubDate>
 				<link>//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/</link>

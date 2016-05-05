@@ -74,27 +74,29 @@
 <span class="kn">import</span> <span class="nn">java.net.MulticastSocket</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SenderThread</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(!</span><span class="n">isInterrupted</span><span class="o">())</span>
-            <span class="n">send</span><span class="o">(</span><span class="s">"hi"</span><span class="o">);</span>
-    <span class="o">}</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="n">run</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">while</span> <span class="o">(!</span><span class="n">isInterrupted</span><span class="o">())</span>
+          <span class="n">send</span><span class="o">(</span><span class="s">"hi"</span><span class="o">);</span>
+  <span class="o">}</span>
 
-    <span class="kd">private</span> <span class="kt">void</span> <span class="n">send</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="n">MulticastSocket</span> <span class="n">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MulticastSocket</span><span class="o">();</span>
-            <span class="n">socket</span><span class="o">.</span><span class="na">setTimeToLive</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-            <span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
-            <span class="n">DatagramPacket</span> <span class="n">pack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DatagramPacket</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="n">buf</span><span class="o">.</span><span class="na">length</span><span class="o">,</span> <span class="n">InetAddress</span><span class="o">.</span><span class="na">getByName</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">group</span><span class="o">),</span> <span class="n">Config</span><span class="o">.</span><span class="na">port</span><span class="o">);</span>
-            <span class="n">socket</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">pack</span><span class="o">);</span>
-            <span class="n">socket</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-            <span class="n">sleep</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// we don't care about sleep() being interrupted</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+  <span class="kd">private</span> <span class="kt">void</span> <span class="n">send</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+          <span class="n">MulticastSocket</span> <span class="n">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MulticastSocket</span><span class="o">();</span>
+          <span class="n">socket</span><span class="o">.</span><span class="na">setTimeToLive</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+          <span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+          <span class="n">DatagramPacket</span> <span class="n">pack</span> <span class="o">=</span> 
+            <span class="k">new</span> <span class="n">DatagramPacket</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="n">buf</span><span class="o">.</span><span class="na">length</span><span class="o">,</span> 
+              <span class="n">InetAddress</span><span class="o">.</span><span class="na">getByName</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">group</span><span class="o">),</span> <span class="n">Config</span><span class="o">.</span><span class="na">port</span><span class="o">);</span>
+          <span class="n">socket</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">pack</span><span class="o">);</span>
+          <span class="n">socket</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+          <span class="n">sleep</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+          <span class="c1">// we don't care about sleep() being interrupted</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
 </div>
@@ -117,45 +119,53 @@
 <span class="kn">import</span> <span class="nn">java.util.Set</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReceiverThread</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">hosts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;();</span>
+  <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">hosts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;();</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="n">MulticastSocket</span> <span class="n">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MulticastSocket</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">port</span><span class="o">);</span>
-            <span class="n">socket</span><span class="o">.</span><span class="na">joinGroup</span><span class="o">(</span><span class="n">InetAddress</span><span class="o">.</span><span class="na">getByName</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">group</span><span class="o">));</span>
-            
-            <span class="k">while</span> <span class="o">(!</span><span class="n">isInterrupted</span><span class="o">())</span> <span class="o">{</span>
-                <span class="kt">byte</span> <span class="n">buf</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">1024</span><span class="o">];</span>
-                <span class="n">DatagramPacket</span> <span class="n">pack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DatagramPacket</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="n">buf</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
-                <span class="n">socket</span><span class="o">.</span><span class="na">receive</span><span class="o">(</span><span class="n">pack</span><span class="o">);</span>
-                
-                <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">pack</span><span class="o">.</span><span class="na">getData</span><span class="o">(),</span> <span class="mi">0</span><span class="o">,</span> <span class="n">pack</span><span class="o">.</span><span class="na">getLength</span><span class="o">());</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"hi"</span><span class="o">))</span> <span class="o">{</span>
-                    <span class="n">hosts</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">pack</span><span class="o">.</span><span class="na">getAddress</span><span class="o">().</span><span class="na">getHostAddress</span><span class="o">(),</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
-                <span class="o">}</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getAvailableHosts</span><span class="o">());</span>
-            <span class="o">}</span>
-            
-            <span class="n">socket</span><span class="o">.</span><span class="na">leaveGroup</span><span class="o">(</span><span class="n">InetAddress</span><span class="o">.</span><span class="na">getByName</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">group</span><span class="o">));</span>
-            <span class="n">socket</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getAvailableHosts</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">hostsToRemove</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">hosts</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
-            <span class="kt">long</span> <span class="n">entryAge</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">-</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">entryAge</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">hostsToRemove</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">());</span>
-            <span class="o">}</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="n">run</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">MulticastSocket</span> <span class="n">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MulticastSocket</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">port</span><span class="o">);</span>
+      <span class="n">socket</span><span class="o">.</span><span class="na">joinGroup</span><span class="o">(</span><span class="n">InetAddress</span><span class="o">.</span><span class="na">getByName</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">group</span><span class="o">));</span>
+        
+      <span class="k">while</span> <span class="o">(!</span><span class="n">isInterrupted</span><span class="o">())</span> <span class="o">{</span>
+        <span class="kt">byte</span> <span class="n">buf</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">1024</span><span class="o">];</span>
+        <span class="n">DatagramPacket</span> <span class="n">pack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DatagramPacket</span><span class="o">(</span><span class="n">buf</span><span class="o">,</span> <span class="n">buf</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+        <span class="n">socket</span><span class="o">.</span><span class="na">receive</span><span class="o">(</span><span class="n">pack</span><span class="o">);</span>
+              
+        <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> 
+          <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">pack</span><span class="o">.</span><span class="na">getData</span><span class="o">(),</span> <span class="mi">0</span><span class="o">,</span> <span class="n">pack</span><span class="o">.</span><span class="na">getLength</span><span class="o">());</span>
+          
+        <span class="k">if</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"hi"</span><span class="o">))</span> <span class="o">{</span>
+          <span class="n">hosts</span><span class="o">.</span><span class="na">put</span><span class="o">(</span>
+            <span class="n">pack</span><span class="o">.</span><span class="na">getAddress</span><span class="o">().</span><span class="na">getHostAddress</span><span class="o">(),</span> 
+            <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span>
+          <span class="o">);</span>
         <span class="o">}</span>
         
-        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">host</span> <span class="o">:</span> <span class="n">hostsToRemove</span><span class="o">)</span> <span class="n">hosts</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">host</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">hosts</span><span class="o">.</span><span class="na">keySet</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getAvailableHosts</span><span class="o">());</span>
+      <span class="o">}</span>
+          
+      <span class="n">socket</span><span class="o">.</span><span class="na">leaveGroup</span><span class="o">(</span><span class="n">InetAddress</span><span class="o">.</span><span class="na">getByName</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">group</span><span class="o">));</span>
+      <span class="n">socket</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
     <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kd">private</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getAvailableHosts</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">hostsToRemove</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">hosts</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+      <span class="kt">long</span> <span class="n">entryAge</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">-</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+
+      <span class="k">if</span> <span class="o">(</span><span class="n">entryAge</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">hostsToRemove</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">());</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+      
+    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">host</span> <span class="o">:</span> <span class="n">hostsToRemove</span><span class="o">)</span> <span class="n">hosts</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">host</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">hosts</span><span class="o">.</span><span class="na">keySet</span><span class="o">();</span>
+  <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
 </div>
@@ -178,17 +188,22 @@ docker run --rm -v <span class="s2">"</span><span class="nv">$PWD</span><span cl
 </code></pre>
 </div>
 
-<p>Print-screens of my execution (4 docker containers):
-//todo</p>
+<p>Print-screens of my execution (4 docker containers):</p>
+
+<center>Starting - list of available hosts increasing</center>
+<p><img src="../../../../assets/2015-11-29_1.png" alt="Starting - list of available hosts increasing" /></p>
+
+<center>Stopping 2 containers - lists of available hosts decreasing</center>
+<p><img src="../../../../assets/2015-11-29_2.png" alt="Stopping 2 containers - lists of available hosts decreasing" /></p>
 
 <p><a href="https://s3-us-west-2.amazonaws.com/ecolabardini/playing-with-multicast.zip">Download the source code</a></p>
 
 <h3 id="references">References</h3>
 <ul>
-  <li>https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html</li>
-  <li>http://staff.www.ltu.se/~peppar/java/multicast_example/</li>
-  <li>http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf</li>
-  <li>http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml</li>
+  <li><a href="https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html">https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html</a></li>
+  <li><a href="http://staff.www.ltu.se/~peppar/java/multicast_example/">http://staff.www.ltu.se/~peppar/java/multicast_example/</a></li>
+  <li><a href="http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf">http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf</a></li>
+  <li><a href="http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml">http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml</a></li>
 </ul>
 
 </div>

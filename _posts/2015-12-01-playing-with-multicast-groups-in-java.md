@@ -35,27 +35,29 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 public class SenderThread extends Thread {
-    @Override
-    public void run() {
-        while (!isInterrupted())
-            send("hi");
-    }
+  @Override
+  public void run() {
+      while (!isInterrupted())
+          send("hi");
+  }
 
-    private void send(String message) {
-        try {
-            MulticastSocket socket = new MulticastSocket();
-            socket.setTimeToLive(1);
-            byte[] buf = message.getBytes();
-            DatagramPacket pack = new DatagramPacket(buf, buf.length, InetAddress.getByName(Config.group), Config.port);
-            socket.send(pack);
-            socket.close();
-            sleep(5000);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            // we don't care about sleep() being interrupted
-        }
-    }
+  private void send(String message) {
+    try {
+          MulticastSocket socket = new MulticastSocket();
+          socket.setTimeToLive(1);
+          byte[] buf = message.getBytes();
+          DatagramPacket pack = 
+            new DatagramPacket(buf, buf.length, 
+              InetAddress.getByName(Config.group), Config.port);
+          socket.send(pack);
+          socket.close();
+          sleep(5000);
+      } catch (IOException e) {
+          e.printStackTrace();
+      } catch (InterruptedException e) {
+          // we don't care about sleep() being interrupted
+      }
+  }
 }
 ~~~
 
@@ -78,45 +80,53 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class ReceiverThread extends Thread {
-    private Map<String, Long> hosts = new HashMap<String, Long>();
+  private Map<String, Long> hosts = new HashMap<String, Long>();
 
-    @Override
-    public void run() {
-        try {
-            MulticastSocket socket = new MulticastSocket(Config.port);
-            socket.joinGroup(InetAddress.getByName(Config.group));
-            
-            while (!isInterrupted()) {
-                byte buf[] = new byte[1024];
-                DatagramPacket pack = new DatagramPacket(buf, buf.length);
-                socket.receive(pack);
-                
-                String message = new String(pack.getData(), 0, pack.getLength());
-                if (message.equals("hi")) {
-                    hosts.put(pack.getAddress().getHostAddress(), System.currentTimeMillis());
-                }
-                System.out.println(getAvailableHosts());
-            }
-            
-            socket.leaveGroup(InetAddress.getByName(Config.group));
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Set<String> getAvailableHosts() {
-        List<String> hostsToRemove = new ArrayList<String>();
-        for (Entry<String, Long> entry : hosts.entrySet()) {
-            long entryAge = System.currentTimeMillis() - entry.getValue();
-            if (entryAge > 10000) {
-                hostsToRemove.add(entry.getKey());
-            }
+  @Override
+  public void run() {
+    try {
+      MulticastSocket socket = new MulticastSocket(Config.port);
+      socket.joinGroup(InetAddress.getByName(Config.group));
+        
+      while (!isInterrupted()) {
+        byte buf[] = new byte[1024];
+        DatagramPacket pack = new DatagramPacket(buf, buf.length);
+        socket.receive(pack);
+              
+        String message = 
+          new String(pack.getData(), 0, pack.getLength());
+          
+        if (message.equals("hi")) {
+          hosts.put(
+            pack.getAddress().getHostAddress(), 
+            System.currentTimeMillis()
+          );
         }
         
-        for (String host : hostsToRemove) hosts.remove(host);
-        return hosts.keySet();
+        System.out.println(getAvailableHosts());
+      }
+          
+      socket.leaveGroup(InetAddress.getByName(Config.group));
+      socket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
+
+  private Set<String> getAvailableHosts() {
+    List<String> hostsToRemove = new ArrayList<String>();
+
+    for (Entry<String, Long> entry : hosts.entrySet()) {
+      long entryAge = System.currentTimeMillis() - entry.getValue();
+
+      if (entryAge > 10000) {
+        hostsToRemove.add(entry.getKey());
+      }
+    }
+      
+    for (String host : hostsToRemove) hosts.remove(host);
+    return hosts.keySet();
+  }
 }
 ~~~
 
@@ -139,12 +149,17 @@ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp java:7 java -jar targ
 ~~~
 
 Print-screens of my execution (4 docker containers):
-//todo
+
+<center>Starting - list of available hosts increasing</center>
+![Starting - list of available hosts increasing](../../../../assets/2015-11-29_1.png)
+
+<center>Stopping 2 containers - lists of available hosts decreasing</center>
+![Stopping 2 containers - lists of available hosts decreasing](../../../../assets/2015-11-29_2.png)
 
 [Download the source code](https://s3-us-west-2.amazonaws.com/ecolabardini/playing-with-multicast.zip)
 
 ### References
-* https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html
-* http://staff.www.ltu.se/~peppar/java/multicast_example/
-* http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf
-* http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml
+* <https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html>
+* <http://staff.www.ltu.se/~peppar/java/multicast_example/>
+* <http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf>
+* <http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml>

@@ -8,11 +8,11 @@ tags:
 - java
 - multicast
 ---
-Multicast (one-to-many or many-to-many distribution) is group communication where information is addressed to a group of destination computers simultaneously ([Wikipedia](https://en.wikipedia.org/wiki/Multicast)).
+Multicast (one-to-many or many-to-many distribution) is group communication where information is addressed to a group of destination computers simultaneously ([Wikipedia](https://en.wikipedia.org/wiki/Multicast){:target="_blank"}).
 
 UDP is the most common protocol used to broadcast/multicast messages. It’s important to say that it is a best effort protocol with no delivery guarantees, order or duplicate protection, so you need to design your application aware of it.
 
-[Reliable musticast](https://en.wikipedia.org/wiki/Reliable_multicast) can be implemented on top of the UDP protocol by some middleware applications.
+[Reliable musticast](https://en.wikipedia.org/wiki/Reliable_multicast){:target="_blank"} can be implemented on top of the UDP protocol by some middleware applications.
 
 There are several types of applications that can be designed to take advantage of this protocol:
 
@@ -24,7 +24,7 @@ In this tutorial I’ll show you how to implement a basic version of the first o
 
 Based on the references I implemented two threads: the ``Sender`` and the ``Receiver``.
 
-The ``SenderThread`` class sends the ``String`` “hi” every 5 seconds in a ``DatagramPacket`` addressed to ``225.4.5.6:5000`` (randomly choosed based on [this](http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml)) through the ``MulticastSocket``.
+The ``SenderThread`` class sends the ``String`` “hi” every 5 seconds in a ``DatagramPacket`` addressed to ``225.4.5.6:5000`` (randomly choosed based on [this](http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml){:target="_blank"}) through the ``MulticastSocket``.
 
 ~~~java
 package com.github.ecolabardini.example;
@@ -159,7 +159,7 @@ Print-screens of my execution (4 docker containers):
 [Download the source code](https://s3-us-west-2.amazonaws.com/ecolabardini/playing-with-multicast.zip)
 
 ### References
-* <https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html>
-* <http://staff.www.ltu.se/~peppar/java/multicast_example/>
-* <http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf>
-* <http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml>
+* [Broadcasting to Multiple Recipients, The Java Tutorials](https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html){:target="_blank"}
+* [Java Multicasting Example, Professor Peter Panes @ LTU](http://staff.www.ltu.se/~peppar/java/multicast_example/){:target="_blank"}
+* [Multicast and Real-Time Applications, Professor Henning Schulzrinne @ CU](http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf){:target="_blank"}
+* [IPv4 Multicast Address Space Registry, IANA](http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml){:target="_blank"}

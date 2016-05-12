@@ -100,7 +100,7 @@ make stop cluster
 
 ### References
 
-* [Bringing Consistency to Riak - Joseph Blomstedt, RICON2012](https://vimeo.com/51973001){:target="_blank"}
-* [Strong Consistency](http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/){:target="_blank"}
-* [Riak Quick Start with Docker](http://basho.com/posts/technical/riak-quick-start-with-docker){:target="_blank"}
-* [A Docker project to bring up a local Riak cluster](https://github.com/hectcastro/docker-riak){:target="_blank"}
+* [Bringing Consistency to Riak, Joseph Blomstedt, RICON2012](https://vimeo.com/51973001){:target="_blank"}
+* [Strong Consistency, Basho Documentation](http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/){:target="_blank"}
+* [Riak Quick Start with Docker, Basho Blog](http://basho.com/posts/technical/riak-quick-start-with-docker){:target="_blank"}
+* [A Docker project to bring up a local Riak cluster, Hector Castro](https://github.com/hectcastro/docker-riak){:target="_blank"}

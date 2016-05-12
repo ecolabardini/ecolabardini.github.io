@@ -46,11 +46,11 @@
   <div class="post-date">
     <time>01 Dec 2015</time>
   </div>
-  <p>Multicast (one-to-many or many-to-many distribution) is group communication where information is addressed to a group of destination computers simultaneously (<a href="https://en.wikipedia.org/wiki/Multicast">Wikipedia</a>).</p>
+  <p>Multicast (one-to-many or many-to-many distribution) is group communication where information is addressed to a group of destination computers simultaneously (<a href="https://en.wikipedia.org/wiki/Multicast" target="_blank">Wikipedia</a>).</p>
 
 <p>UDP is the most common protocol used to broadcast/multicast messages. It’s important to say that it is a best effort protocol with no delivery guarantees, order or duplicate protection, so you need to design your application aware of it.</p>
 
-<p><a href="https://en.wikipedia.org/wiki/Reliable_multicast">Reliable musticast</a> can be implemented on top of the UDP protocol by some middleware applications.</p>
+<p><a href="https://en.wikipedia.org/wiki/Reliable_multicast" target="_blank">Reliable musticast</a> can be implemented on top of the UDP protocol by some middleware applications.</p>
 
 <p>There are several types of applications that can be designed to take advantage of this protocol:</p>
 
@@ -64,7 +64,7 @@
 
 <p>Based on the references I implemented two threads: the <code class="highlighter-rouge">Sender</code> and the <code class="highlighter-rouge">Receiver</code>.</p>
 
-<p>The <code class="highlighter-rouge">SenderThread</code> class sends the <code class="highlighter-rouge">String</code> “hi” every 5 seconds in a <code class="highlighter-rouge">DatagramPacket</code> addressed to <code class="highlighter-rouge">225.4.5.6:5000</code> (randomly choosed based on <a href="http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml">this</a>) through the <code class="highlighter-rouge">MulticastSocket</code>.</p>
+<p>The <code class="highlighter-rouge">SenderThread</code> class sends the <code class="highlighter-rouge">String</code> “hi” every 5 seconds in a <code class="highlighter-rouge">DatagramPacket</code> addressed to <code class="highlighter-rouge">225.4.5.6:5000</code> (randomly choosed based on <a href="http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml" target="_blank">this</a>) through the <code class="highlighter-rouge">MulticastSocket</code>.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">ecolabardini</span><span class="o">.</span><span class="na">example</span><span class="o">;</span>
 
@@ -200,10 +200,10 @@ docker run --rm -v <span class="s2">"</span><span class="nv">$PWD</span><span cl
 
 <h3 id="references">References</h3>
 <ul>
-  <li><a href="https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html">https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html</a></li>
-  <li><a href="http://staff.www.ltu.se/~peppar/java/multicast_example/">http://staff.www.ltu.se/~peppar/java/multicast_example/</a></li>
-  <li><a href="http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf">http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf</a></li>
-  <li><a href="http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml">http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml</a></li>
+  <li><a href="https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html" target="_blank">Broadcasting to Multiple Recipients, The Java Tutorials</a></li>
+  <li><a href="http://staff.www.ltu.se/~peppar/java/multicast_example/" target="_blank">Java Multicasting Example, Professor Peter Panes @ LTU</a></li>
+  <li><a href="http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf" target="_blank">Multicast and Real-Time Applications, Professor Henning Schulzrinne @ CU</a></li>
+  <li><a href="http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml" target="_blank">IPv4 Multicast Address Space Registry, IANA</a></li>
 </ul>
 
 </div>

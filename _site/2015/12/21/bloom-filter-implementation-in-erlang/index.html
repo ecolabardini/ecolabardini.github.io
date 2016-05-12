@@ -46,15 +46,15 @@
   <div class="post-date">
     <time>21 Dec 2015</time>
   </div>
-  <p>A Bloom filter is a space-efficient probabilistic data structure, conceived by Burton Howard Bloom in 1970, that is used to test whether an element is a member of a set <a href="https://en.wikipedia.org/wiki/Bloom_filter">Wikipedia</a>.</p>
+  <p>A Bloom filter is a space-efficient probabilistic data structure, conceived by Burton Howard Bloom in 1970, that is used to test whether an element is a member of a set <a href="https://en.wikipedia.org/wiki/Bloom_filter" target="_blank">Wikipedia</a>.</p>
 
-<p>In order to create a Bloom filter, we need a uniformly distributed, independently and fast/eficient hash function. The <code class="highlighter-rouge">erlang:phash2/1,2</code> is a <a href="https://github.com/blackberry/Erlang-OTP/blob/master/erts/emulator/beam/utils.c#L976">BIF</a> of the hash function suggested by <a href="http://www.burtleburtle.net/bob/">Bob Jenkins</a> that satisfies this properties.</p>
+<p>In order to create a Bloom filter, we need a uniformly distributed, independently and fast/eficient hash function. The <code class="highlighter-rouge">erlang:phash2/1,2</code> is a <a href="https://github.com/blackberry/Erlang-OTP/blob/master/erts/emulator/beam/utils.c#L976" target="_blank">BIF</a> of the hash function suggested by <a href="http://www.burtleburtle.net/bob/" target="_blank">Bob Jenkins</a> that satisfies this properties.</p>
 
 <p>In this post I’ll show you a basic Bloom filter implementation in Erlang and Redis. You can use it almost on everything with small improvements/changes (e.g., database records, user names, e-mails, words).</p>
 
-<p>Let’s say we have 2 million elements and can live with a <code class="highlighter-rouge">0.001</code> probability of false positives (hash collisions can happen). Based on the <a href="http://hur.st/bloomfilter?n=2000000&amp;p=0.001">Bloom filter calculator</a>, we’ll need 10 different hashes per element and <code class="highlighter-rouge">28,755,176 bits (3.43MB)</code> to represent our entire data.</p>
+<p>Let’s say we have 2 million elements and can live with a <code class="highlighter-rouge">0.001</code> probability of false positives (hash collisions can happen). Based on the <a href="http://hur.st/bloomfilter?n=2000000&amp;p=0.001" target="_blank">Bloom filter calculator</a>, we’ll need 10 different hashes per element and <code class="highlighter-rouge">28,755,176 bits (3.43MB)</code> to represent our entire data.</p>
 
-<p>It’s a good idea (or a must if you are designing production ready distributed systems) to maintain the Bloom filter easy accessible for a cluster. For this, we’ll use <a href="http://redis.io/">Redis</a> (an in-memory data structure store) and <a href="https://github.com/wooga/eredis">wooga/eredis</a> (Erlang Redis Client). Redis already have operations like <a href="http://redis.io/commands/SETBIT">SETBIT</a> and <a href="http://redis.io/commands/GETBIT">GETBIT</a> on a key at a specified position.</p>
+<p>It’s a good idea (or a must if you are designing production ready distributed systems) to maintain the Bloom filter easy accessible for a cluster. For this, we’ll use <a href="http://redis.io/" target="_blank">Redis</a> (an in-memory data structure store) and <a href="https://github.com/wooga/eredis" target="_blank">wooga/eredis</a> (Erlang Redis Client). Redis already have operations like <a href="http://redis.io/commands/SETBIT" target="_blank">SETBIT</a> and <a href="http://redis.io/commands/GETBIT" target="_blank">GETBIT</a> on a key at a specified position.</p>
 
 <p>In the code below, you can check the implemented functions:
 * <code class="highlighter-rouge">positions/1</code>: returns a list with <code class="highlighter-rouge">K=10</code> different hashes based on the Element + increment; 
@@ -152,13 +152,14 @@ bf:exists<span class="o">(</span><span class="s2">"word3"</span><span class="o">
 <h3 id="references">References</h3>
 
 <ul>
-  <li><a href="http://www.burtleburtle.net/bob/">http://www.burtleburtle.net/bob/</a></li>
-  <li><a href="http://billmill.org/bloomfilter-tutorial/">http://billmill.org/bloomfilter-tutorial/</a></li>
-  <li><a href="http://prakhar.me/articles/bloom-filters-for-dummies/">http://prakhar.me/articles/bloom-filters-for-dummies/</a></li>
-  <li><a href="http://osdir.com/ml/erlang-questions-programming/2009-05/msg00179.html">http://osdir.com/ml/erlang-questions-programming/2009-05/msg00179.html</a></li>
-  <li><a href="http://hur.st/bloomfilter">http://hur.st/bloomfilter</a></li>
-  <li><a href="https://github.com/rdamodharan/redbloom">https://github.com/rdamodharan/redbloom</a></li>
+  <li><a href="http://www.burtleburtle.net/bob/" target="_blank">Bob Jenkins’ Web Site</a></li>
+  <li><a href="http://billmill.org/bloomfilter-tutorial/" target="_blank">Bloom Filters by Example, Bill Mill</a></li>
+  <li><a href="http://prakhar.me/articles/bloom-filters-for-dummies/" target="_blank">Bloom Filters for Dummies, Prakhar Srivastav</a></li>
+  <li><a href="http://osdir.com/ml/erlang-questions-programming/2009-05/msg00179.html" target="_blank">Erlang Question ‘Warning: erlang:phash2 output’, OSDir</a></li>
+  <li><a href="https://github.com/rdamodharan/redbloom" target="_blank">Bloom Filter with Redis backend, Damodharan Rajalingam</a></li>
+  <li><a href="http://hur.st/bloomfilter" target="_blank">Bloom Filter Calculator, Thomas Hurst</a></li>
 </ul>
+
 
 </div>
 

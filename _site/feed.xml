@@ -98,10 +98,10 @@ world
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://vimeo.com/51973001&quot; target=&quot;_blank&quot;&gt;Bringing Consistency to Riak - Joseph Blomstedt, RICON2012&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot; target=&quot;_blank&quot;&gt;Strong Consistency&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://basho.com/posts/technical/riak-quick-start-with-docker&quot; target=&quot;_blank&quot;&gt;Riak Quick Start with Docker&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/hectcastro/docker-riak&quot; target=&quot;_blank&quot;&gt;A Docker project to bring up a local Riak cluster&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://vimeo.com/51973001&quot; target=&quot;_blank&quot;&gt;Bringing Consistency to Riak, Joseph Blomstedt, RICON2012&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/&quot; target=&quot;_blank&quot;&gt;Strong Consistency, Basho Documentation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://basho.com/posts/technical/riak-quick-start-with-docker&quot; target=&quot;_blank&quot;&gt;Riak Quick Start with Docker, Basho Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/hectcastro/docker-riak&quot; target=&quot;_blank&quot;&gt;A Docker project to bring up a local Riak cluster, Hector Castro&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
 				<pubDate>Sun, 17 Apr 2016 19:49:00 -0300</pubDate>
@@ -111,15 +111,15 @@ world
 		
 			<item>
 				<title>Bloom filter implementation in Erlang and Redis</title>
-        <description>&lt;p&gt;A Bloom filter is a space-efficient probabilistic data structure, conceived by Burton Howard Bloom in 1970, that is used to test whether an element is a member of a set &lt;a href=&quot;https://en.wikipedia.org/wiki/Bloom_filter&quot;&gt;Wikipedia&lt;/a&gt;.&lt;/p&gt;
+        <description>&lt;p&gt;A Bloom filter is a space-efficient probabilistic data structure, conceived by Burton Howard Bloom in 1970, that is used to test whether an element is a member of a set &lt;a href=&quot;https://en.wikipedia.org/wiki/Bloom_filter&quot; target=&quot;_blank&quot;&gt;Wikipedia&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;In order to create a Bloom filter, we need a uniformly distributed, independently and fast/eficient hash function. The &lt;code class=&quot;highlighter-rouge&quot;&gt;erlang:phash2/1,2&lt;/code&gt; is a &lt;a href=&quot;https://github.com/blackberry/Erlang-OTP/blob/master/erts/emulator/beam/utils.c#L976&quot;&gt;BIF&lt;/a&gt; of the hash function suggested by &lt;a href=&quot;http://www.burtleburtle.net/bob/&quot;&gt;Bob Jenkins&lt;/a&gt; that satisfies this properties.&lt;/p&gt;
+&lt;p&gt;In order to create a Bloom filter, we need a uniformly distributed, independently and fast/eficient hash function. The &lt;code class=&quot;highlighter-rouge&quot;&gt;erlang:phash2/1,2&lt;/code&gt; is a &lt;a href=&quot;https://github.com/blackberry/Erlang-OTP/blob/master/erts/emulator/beam/utils.c#L976&quot; target=&quot;_blank&quot;&gt;BIF&lt;/a&gt; of the hash function suggested by &lt;a href=&quot;http://www.burtleburtle.net/bob/&quot; target=&quot;_blank&quot;&gt;Bob Jenkins&lt;/a&gt; that satisfies this properties.&lt;/p&gt;
 
 &lt;p&gt;In this post I’ll show you a basic Bloom filter implementation in Erlang and Redis. You can use it almost on everything with small improvements/changes (e.g., database records, user names, e-mails, words).&lt;/p&gt;
 
-&lt;p&gt;Let’s say we have 2 million elements and can live with a &lt;code class=&quot;highlighter-rouge&quot;&gt;0.001&lt;/code&gt; probability of false positives (hash collisions can happen). Based on the &lt;a href=&quot;http://hur.st/bloomfilter?n=2000000&amp;amp;p=0.001&quot;&gt;Bloom filter calculator&lt;/a&gt;, we’ll need 10 different hashes per element and &lt;code class=&quot;highlighter-rouge&quot;&gt;28,755,176 bits (3.43MB)&lt;/code&gt; to represent our entire data.&lt;/p&gt;
+&lt;p&gt;Let’s say we have 2 million elements and can live with a &lt;code class=&quot;highlighter-rouge&quot;&gt;0.001&lt;/code&gt; probability of false positives (hash collisions can happen). Based on the &lt;a href=&quot;http://hur.st/bloomfilter?n=2000000&amp;amp;p=0.001&quot; target=&quot;_blank&quot;&gt;Bloom filter calculator&lt;/a&gt;, we’ll need 10 different hashes per element and &lt;code class=&quot;highlighter-rouge&quot;&gt;28,755,176 bits (3.43MB)&lt;/code&gt; to represent our entire data.&lt;/p&gt;
 
-&lt;p&gt;It’s a good idea (or a must if you are designing production ready distributed systems) to maintain the Bloom filter easy accessible for a cluster. For this, we’ll use &lt;a href=&quot;http://redis.io/&quot;&gt;Redis&lt;/a&gt; (an in-memory data structure store) and &lt;a href=&quot;https://github.com/wooga/eredis&quot;&gt;wooga/eredis&lt;/a&gt; (Erlang Redis Client). Redis already have operations like &lt;a href=&quot;http://redis.io/commands/SETBIT&quot;&gt;SETBIT&lt;/a&gt; and &lt;a href=&quot;http://redis.io/commands/GETBIT&quot;&gt;GETBIT&lt;/a&gt; on a key at a specified position.&lt;/p&gt;
+&lt;p&gt;It’s a good idea (or a must if you are designing production ready distributed systems) to maintain the Bloom filter easy accessible for a cluster. For this, we’ll use &lt;a href=&quot;http://redis.io/&quot; target=&quot;_blank&quot;&gt;Redis&lt;/a&gt; (an in-memory data structure store) and &lt;a href=&quot;https://github.com/wooga/eredis&quot; target=&quot;_blank&quot;&gt;wooga/eredis&lt;/a&gt; (Erlang Redis Client). Redis already have operations like &lt;a href=&quot;http://redis.io/commands/SETBIT&quot; target=&quot;_blank&quot;&gt;SETBIT&lt;/a&gt; and &lt;a href=&quot;http://redis.io/commands/GETBIT&quot; target=&quot;_blank&quot;&gt;GETBIT&lt;/a&gt; on a key at a specified position.&lt;/p&gt;
 
 &lt;p&gt;In the code below, you can check the implemented functions:
 * &lt;code class=&quot;highlighter-rouge&quot;&gt;positions/1&lt;/code&gt;: returns a list with &lt;code class=&quot;highlighter-rouge&quot;&gt;K=10&lt;/code&gt; different hashes based on the Element + increment; 
@@ -217,13 +217,14 @@ bf:exists&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&q
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.burtleburtle.net/bob/&quot;&gt;http://www.burtleburtle.net/bob/&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://billmill.org/bloomfilter-tutorial/&quot;&gt;http://billmill.org/bloomfilter-tutorial/&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://prakhar.me/articles/bloom-filters-for-dummies/&quot;&gt;http://prakhar.me/articles/bloom-filters-for-dummies/&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://osdir.com/ml/erlang-questions-programming/2009-05/msg00179.html&quot;&gt;http://osdir.com/ml/erlang-questions-programming/2009-05/msg00179.html&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://hur.st/bloomfilter&quot;&gt;http://hur.st/bloomfilter&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/rdamodharan/redbloom&quot;&gt;https://github.com/rdamodharan/redbloom&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.burtleburtle.net/bob/&quot; target=&quot;_blank&quot;&gt;Bob Jenkins’ Web Site&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://billmill.org/bloomfilter-tutorial/&quot; target=&quot;_blank&quot;&gt;Bloom Filters by Example, Bill Mill&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://prakhar.me/articles/bloom-filters-for-dummies/&quot; target=&quot;_blank&quot;&gt;Bloom Filters for Dummies, Prakhar Srivastav&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://osdir.com/ml/erlang-questions-programming/2009-05/msg00179.html&quot; target=&quot;_blank&quot;&gt;Erlang Question ‘Warning: erlang:phash2 output’, OSDir&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/rdamodharan/redbloom&quot; target=&quot;_blank&quot;&gt;Bloom Filter with Redis backend, Damodharan Rajalingam&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://hur.st/bloomfilter&quot; target=&quot;_blank&quot;&gt;Bloom Filter Calculator, Thomas Hurst&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
 </description>
 				<pubDate>Mon, 21 Dec 2015 10:31:00 -0200</pubDate>
 				<link>//ecolabardini.github.io/2015/12/21/bloom-filter-implementation-in-erlang/</link>
@@ -232,11 +233,11 @@ bf:exists&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&q
 		
 			<item>
 				<title>Playing with multicast groups in Java</title>
-        <description>&lt;p&gt;Multicast (one-to-many or many-to-many distribution) is group communication where information is addressed to a group of destination computers simultaneously (&lt;a href=&quot;https://en.wikipedia.org/wiki/Multicast&quot;&gt;Wikipedia&lt;/a&gt;).&lt;/p&gt;
+        <description>&lt;p&gt;Multicast (one-to-many or many-to-many distribution) is group communication where information is addressed to a group of destination computers simultaneously (&lt;a href=&quot;https://en.wikipedia.org/wiki/Multicast&quot; target=&quot;_blank&quot;&gt;Wikipedia&lt;/a&gt;).&lt;/p&gt;
 
 &lt;p&gt;UDP is the most common protocol used to broadcast/multicast messages. It’s important to say that it is a best effort protocol with no delivery guarantees, order or duplicate protection, so you need to design your application aware of it.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Reliable_multicast&quot;&gt;Reliable musticast&lt;/a&gt; can be implemented on top of the UDP protocol by some middleware applications.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Reliable_multicast&quot; target=&quot;_blank&quot;&gt;Reliable musticast&lt;/a&gt; can be implemented on top of the UDP protocol by some middleware applications.&lt;/p&gt;
 
 &lt;p&gt;There are several types of applications that can be designed to take advantage of this protocol:&lt;/p&gt;
 
@@ -250,7 +251,7 @@ bf:exists&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&q
 
 &lt;p&gt;Based on the references I implemented two threads: the &lt;code class=&quot;highlighter-rouge&quot;&gt;Sender&lt;/code&gt; and the &lt;code class=&quot;highlighter-rouge&quot;&gt;Receiver&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SenderThread&lt;/code&gt; class sends the &lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt; “hi” every 5 seconds in a &lt;code class=&quot;highlighter-rouge&quot;&gt;DatagramPacket&lt;/code&gt; addressed to &lt;code class=&quot;highlighter-rouge&quot;&gt;225.4.5.6:5000&lt;/code&gt; (randomly choosed based on &lt;a href=&quot;http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml&quot;&gt;this&lt;/a&gt;) through the &lt;code class=&quot;highlighter-rouge&quot;&gt;MulticastSocket&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SenderThread&lt;/code&gt; class sends the &lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt; “hi” every 5 seconds in a &lt;code class=&quot;highlighter-rouge&quot;&gt;DatagramPacket&lt;/code&gt; addressed to &lt;code class=&quot;highlighter-rouge&quot;&gt;225.4.5.6:5000&lt;/code&gt; (randomly choosed based on &lt;a href=&quot;http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml&quot; target=&quot;_blank&quot;&gt;this&lt;/a&gt;) through the &lt;code class=&quot;highlighter-rouge&quot;&gt;MulticastSocket&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ecolabardini&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;example&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
@@ -386,10 +387,10 @@ docker run --rm -v &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span 
 
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html&quot;&gt;https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://staff.www.ltu.se/~peppar/java/multicast_example/&quot;&gt;http://staff.www.ltu.se/~peppar/java/multicast_example/&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf&quot;&gt;http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml&quot;&gt;http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/javase/tutorial/networking/datagrams/broadcasting.html&quot; target=&quot;_blank&quot;&gt;Broadcasting to Multiple Recipients, The Java Tutorials&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://staff.www.ltu.se/~peppar/java/multicast_example/&quot; target=&quot;_blank&quot;&gt;Java Multicasting Example, Professor Peter Panes @ LTU&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.cs.columbia.edu/~hgs/teaching/internet/mcast2.pdf&quot; target=&quot;_blank&quot;&gt;Multicast and Real-Time Applications, Professor Henning Schulzrinne @ CU&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml&quot; target=&quot;_blank&quot;&gt;IPv4 Multicast Address Space Registry, IANA&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
 				<pubDate>Tue, 01 Dec 2015 10:13:00 -0200</pubDate>
@@ -399,7 +400,33 @@ docker run --rm -v &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span 
 		
 			<item>
 				<title>My docker whale of fortune</title>
-        <description>
+        <description>&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@hell:~ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget -qO- https://get.docker.com/ | sh
+root@hell:~ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run ecolabardini/whale
+_______________________________________
+/ Just go ahead and write your own      &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+| multitasking multiuser os! Worked &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; |
+| me all the times.                     |
+|                                       |
+&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;-- Linus Torvalds                     /
+---------------------------------------
+    &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;  
+                   &lt;span class=&quot;c&quot;&gt;##        .          &lt;/span&gt;
+             &lt;span class=&quot;c&quot;&gt;## ## ##       ==          &lt;/span&gt;
+          &lt;span class=&quot;c&quot;&gt;## ## ## ##      ===          &lt;/span&gt;
+      /&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&lt;/span&gt;___/ &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt;      
+ ~~~ &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;~~ ~~~~ ~~~ ~~~~ ~~ ~ /  &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt;- ~~~   
+      &lt;span class=&quot;se&quot;&gt;\_&lt;/span&gt;_____ o          __/          
+       &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;   &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;       __/           
+         &lt;span class=&quot;se&quot;&gt;\_&lt;/span&gt;___&lt;span class=&quot;se&quot;&gt;\_&lt;/span&gt;_____/  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://docs.docker.com/linux/started/&quot; target=&quot;_blank&quot;&gt;Get Started with Docker Engine for Linux, Docker Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
 				<pubDate>Tue, 24 Nov 2015 09:57:00 -0200</pubDate>
 				<link>//ecolabardini.github.io/2015/11/24/my-docker-whale-of-fortune/</link>
@@ -408,7 +435,113 @@ docker run --rm -v &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span 
 		
 			<item>
 				<title>Versioning web-services with Java EE</title>
-        <description>
+        <description>&lt;p&gt;So, how do you plan on versioning your web-services?&lt;/p&gt;
+
+&lt;p&gt;This is crucial today, when you business logic is changing all the time and you have to add new fields, parameters, validations and so on. But how to do this without breaking products that already depend upon your API?&lt;/p&gt;
+
+&lt;p&gt;There are some simple ways to accomplish this:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Add the version on you URL path: &lt;a href=&quot;http://www.example.com/api/v2/user&quot;&gt;http://www.example.com/api/v2/user&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Add a custom request header: &lt;code class=&quot;highlighter-rouge&quot;&gt;api-version: 2&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Modify the accept header: &lt;code class=&quot;highlighter-rouge&quot;&gt;Accept: application/com.example.v2+json&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Add a query parameter: &lt;a href=&quot;http://www.example.com/api/user?version=v2&quot;&gt;http://www.example.com/api/user?version=v2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In this tutorial I will cover the first method with Java EE, since it is more evident to customers and easy to implement because of the way JAX-RS handles paths (I think it might break the RESTful philosophy because the resource path changes…).&lt;/p&gt;
+
+&lt;p&gt;Let’s start with a Maven Archetype (I’m using Apache Maven 3.3.3). The command below generates a Java EE 7 webapp project for Wildfly. The project is an EAR, with an EJB-JAR and WAR.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mvn -B archetype:generate &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+-DgroupId&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;com.github.ecolabardini &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+-DartifactId&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;example &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+-Dversion&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.1-SNAPSHOT  &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+-DarchetypeArtifactId&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;wildfly-javaee7-webapp-ear-blank-archetype &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+-DarchetypeGroupId&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;org.wildfly.archetype &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+-DarchetypeVersion&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8.2.0.Final &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+-DarchetypeRepository&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;http://repository.jboss.org/nexus/content/groups/public
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Download Wildfly 8.2.1 Final, extract and run it on standalone mode:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget http://download.jboss.org/wildfly/8.2.1.Final/wildfly-8.2.1.Final.tar.gz
+tar xvfz wildfly-8.2.1.Final.tar.gz
+./wildfly-8.2.1.Final/bin/standalone.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I created two Java classes (&lt;code class=&quot;highlighter-rouge&quot;&gt;rest.v1.UserRest&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;rest.v2.UserRest&lt;/code&gt;) on the &lt;code class=&quot;highlighter-rouge&quot;&gt;example-web&lt;/code&gt; project, they are exactly the same except for the package name. They are mapped on the &lt;code class=&quot;highlighter-rouge&quot;&gt;/user&lt;/code&gt; REST path, and I added a GET method &lt;code class=&quot;highlighter-rouge&quot;&gt;/user/123&lt;/code&gt; that prints &lt;code class=&quot;highlighter-rouge&quot;&gt;rest.v1: Hi, I&#39;m user with ID 123&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;javax.ws.rs.GET&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;javax.ws.rs.Path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;javax.ws.rs.PathParam&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;javax.ws.rs.Produces&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;javax.ws.rs.core.MediaType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@Path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserRest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@GET&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/{id}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Produces&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MediaType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;TEXT_PLAIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getUser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@PathParam&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;id&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPackage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; 
+        	&lt;span class=&quot;s&quot;&gt;&quot;: Hi, I&#39;m user with ID &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We need to add the base path to these two implementations (&lt;code class=&quot;highlighter-rouge&quot;&gt;/api/v1/user/123&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;/api/v2/user/123&lt;/code&gt;), so we implement the &lt;code class=&quot;highlighter-rouge&quot;&gt;javax.ws.rs.core.Application&lt;/code&gt; defining the &lt;code class=&quot;highlighter-rouge&quot;&gt;@ApplicationPath&lt;/code&gt;. So, again, I created two Java classes (&lt;code class=&quot;highlighter-rouge&quot;&gt;rest.v1.Application&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;rest.v2.Application&lt;/code&gt;) on the &lt;code class=&quot;highlighter-rouge&quot;&gt;example-web&lt;/code&gt; project, they are responsible for identifying which class works on each path, they are exactly the same except for the package name, &lt;code class=&quot;highlighter-rouge&quot;&gt;@ApplicationPath&lt;/code&gt; and the UserRest import (&lt;code class=&quot;highlighter-rouge&quot;&gt;v1&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;v2&lt;/code&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.HashSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;javax.ws.rs.ApplicationPath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@ApplicationPath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/api/v1&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Application&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;javax&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ws&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;rs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;core&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Application&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;?&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getClasses&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	    &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;?&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HashSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UserRest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To deploy the application, you can download the source code &lt;a href=&quot;https://s3-us-west-2.amazonaws.com/ecolabardini/versioning-webservices.zip&quot;&gt;here&lt;/a&gt; and execute the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mvn clean install
+cp example-ear/target/example-ear.ear wildfly-8.2.1.Final/standalone/deployments/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then you can access:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://localhost:8080/example-web/api/v1/user/1&quot;&gt;http://localhost:8080/example-web/api/v1/user/1&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://localhost:8080/example-web/api/v2/user/1&quot;&gt;http://localhost:8080/example-web/api/v2/user/1&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As you can see, we have two running versions of the &lt;code class=&quot;highlighter-rouge&quot;&gt;UserRest&lt;/code&gt;, and your client/customer is free to decide when it’s time to update his logic to the next version.&lt;/p&gt;
+
+&lt;p&gt;Note that on &lt;code class=&quot;highlighter-rouge&quot;&gt;rest.v2.Application&lt;/code&gt; class you can still import classes from &lt;code class=&quot;highlighter-rouge&quot;&gt;rest.v1&lt;/code&gt; package, exposing a new version of &lt;code class=&quot;highlighter-rouge&quot;&gt;UserRest&lt;/code&gt; and maintaining an old version of other REST classes.&lt;/p&gt;
+
+&lt;p&gt;And if you are already providing a web-service to your customers, you can omit the first version &lt;code class=&quot;highlighter-rouge&quot;&gt;v1&lt;/code&gt;, so everything continues working!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://s3-us-west-2.amazonaws.com/ecolabardini/versioning-webservices.zip&quot;&gt;Download source code&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/javaee/7/tutorial/jaxrs002.htm&quot; target=&quot;_blank&quot;&gt;Creating a RESTful Root Resource Class, The Java EE Tutorial&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.troyhunt.com/2014/02/your-api-versioning-is-wrong-which-is.html&quot; target=&quot;_blank&quot;&gt;Your API versioning is wrong, Troy Hunt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
 				<pubDate>Sun, 22 Nov 2015 22:52:00 -0200</pubDate>
 				<link>//ecolabardini.github.io/2015/11/22/versioning-web-services-with-java-ee/</link>

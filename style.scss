@@ -264,7 +264,7 @@ tbody tr:nth-child(odd) th {
   margin-right: auto;
 
   @media (min-width: 38rem){
-    padding: 5rem 1rem;
+    padding: 2rem 1rem;
   }
 }
 
@@ -305,7 +305,7 @@ tbody tr:nth-child(odd) th {
   }
 
   .masthead-nav {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 
     a {
       color: #aaa;
@@ -340,7 +340,7 @@ tbody tr:nth-child(odd) th {
     margin-bottom: .25rem;
   }
   &-date {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: .75rem;
     text-transform: uppercase;
   }
@@ -348,7 +348,8 @@ tbody tr:nth-child(odd) th {
 
 .list {
   &-post-title {
-    margin-bottom: .25rem;
+    margin-bottom: .15rem;
+    font-size: 1.0rem;
 
     a {
       color: #333;
@@ -360,7 +361,7 @@ tbody tr:nth-child(odd) th {
     }
   }
   &-post-date {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     font-size: .75rem;
     text-transform: uppercase;
   }

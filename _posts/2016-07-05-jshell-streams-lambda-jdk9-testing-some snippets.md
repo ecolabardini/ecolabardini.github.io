@@ -20,7 +20,7 @@ sudo docker run -it ecolabardini/jdk9 bash
 jshell
 ~~~
 
-Removing duplicated items from a list
+Removing duplicated items from a list:
 
 ~~~ java
 Arrays.asList("item1", "item2", "item2", "item3", "item3")
@@ -29,7 +29,7 @@ Arrays.asList("item1", "item2", "item2", "item3", "item3")
   .forEach(System.out::println)
 ~~~
 
-Killing processes by name
+Killing processes by name:
 
 ~~~ java
 ProcessHandle
@@ -41,7 +41,7 @@ ProcessHandle
 
 (ouch! we killed ourselves!)
 
-A simple GET request to my blog
+A simple GET request to my blog:
 
 ~~~ java
 import java.net.http.*;

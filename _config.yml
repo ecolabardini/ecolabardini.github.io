@@ -11,6 +11,8 @@ twitter:
 #  app_id:           1234
 #    publisher:      1234
 
+google_analytics:   "UA-80121720-1"
+
 # URL
 baseurl:            ""
 #baseurl:            "" #For Root Domain

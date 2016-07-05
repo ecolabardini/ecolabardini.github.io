@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
   <link rel="stylesheet" href="/style.css">
   <link rel="alternate" type="application/rss+xml" title="RSS Feed for Eduardo Colabardini" href="/feed.xml" />
-  <!-- Begin Jekyll SEO tag v1.4.0 -->
+  <!-- Begin Jekyll SEO tag v2.0.0 -->
 <title>Riak, Docker &amp; Strong Consistency - Eduardo Colabardini</title>
 <meta property="og:title" content="Riak, Docker &amp; Strong Consistency" />
 <meta name="description" content="Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from Amazon’s Dynamo paper with heavy influence from the CAP theorem. (Wikipedia)" />
@@ -17,8 +17,6 @@
 <meta property="og:site_name" content="Eduardo Colabardini" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-04-17T19:49:00-03:00" />
-<link rel="next" href="//ecolabardini.github.io/2016/07/05/jshell-streams-lambda-jdk9-testing-some-snippets/" title="JShell, Streams, Lambda, JDK9 - Testing some snippets!" />
-<link rel="prev" href="//ecolabardini.github.io/2015/12/21/bloom-filter-implementation-in-erlang/" title="Bloom filter implementation in Erlang and Redis" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@ecolabardini" />
 <meta name="twitter:creator" content="@Eduardo Colabardini" />
@@ -33,6 +31,7 @@
   }
 </script>
 <!-- End Jekyll SEO tag -->
+  
 </head>
 <body>
   <div class="container">
@@ -56,27 +55,27 @@
 
 <p>Building the Riak Docker image (thanks Hector Castro):</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/hectcastro/docker-riak.git
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/hectcastro/docker-riak.git
 <span class="nb">cd </span>docker-riak <span class="o">&amp;&amp;</span> make build
 </code></pre>
 </div>
 
 <p>Running a 5 node cluster with strong consistency enabled:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">DOCKER_HOST</span><span class="o">=</span><span class="s2">"unix:///var/run/docker.sock"</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">DOCKER_HOST</span><span class="o">=</span><span class="s2">"unix:///var/run/docker.sock"</span>
 <span class="nv">DOCKER_RIAK_AUTOMATIC_CLUSTERING</span><span class="o">=</span>1 <span class="nv">DOCKER_RIAK_CLUSTER_SIZE</span><span class="o">=</span>5 <span class="nv">DOCKER_RIAK_STRONG_CONSISTENCY</span><span class="o">=</span>on make start-cluster
 </code></pre>
 </div>
 
 <p>You can get the nodes IP addresses with the following command:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>make <span class="nb">test</span>-cluster | egrep -A6 <span class="s2">"ring_members"</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>make <span class="nb">test</span>-cluster | egrep -A6 <span class="s2">"ring_members"</span>
 </code></pre>
 </div>
 
 <p>Connect to a Riak Docker instance to create a strongly consistent bucket type:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>docker <span class="nb">exec</span> -it riak01 bash
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>docker <span class="nb">exec</span> -it riak01 bash
 riak-admin bucket-type create strongly_consistent <span class="se">\ </span>
   <span class="s1">'{"props":{"consistent":true}}'</span>
 riak-admin bucket-type activate strongly_consistent
@@ -86,7 +85,7 @@ riak-admin bucket-type activate strongly_consistent
 <p>From now on the cluster is ready to be used. Let’s perform some CRUD operations!
 Insert operation with key “hello” and value “world”:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello <span class="se">\</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello <span class="se">\</span>
   -X PUT <span class="se">\</span>
   -H <span class="s2">"Content-type: text/plain"</span> <span class="se">\</span>
   -d <span class="s2">"world"</span>
@@ -97,7 +96,7 @@ Insert operation with key “hello” and value “world”:</p>
 
 <p>Fetching the key “hello” from another Riak node:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>curl -v 172.17.0.3:8098/types/strongly_consistent/buckets/test/keys/hello
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -v 172.17.0.3:8098/types/strongly_consistent/buckets/test/keys/hello
 
 &lt; HTTP/1.1 200 OK 
 &lt; X-Riak-Vclock: a85hYGBgzGBKYWBJLU4tzGDKY2XgZwQKAendfh0X+LIA
@@ -107,7 +106,7 @@ world
 
 <p>Strongly consistent buckets cannot allow siblings by definition, and so all writes to existing keys must include a context with the object. If you attempt a write to a non-empty key without including causal context, you will receive the following error:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello <span class="se">\</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello <span class="se">\</span>
   -X PUT <span class="se">\</span>
   -H <span class="s2">"Content-type: text/plain"</span> <span class="se">\</span>
   -d <span class="s2">"hell"</span>
@@ -118,7 +117,7 @@ world
 
 <p>Update using context (X-Riak-Vclock header):</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>curl -v 172.17.0.4:8098/types/strongly_consistent/buckets/test/keys/hello <span class="se">\</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -v 172.17.0.4:8098/types/strongly_consistent/buckets/test/keys/hello <span class="se">\</span>
   -X PUT <span class="se">\</span>
   -H <span class="s2">"Content-type: text/plain"</span> <span class="se">\</span>
   -H <span class="s2">"X-Riak-Vclock: a85hYGBgzGBKYWBJLU4tzGDKY2XgZwQKAendfh0X+LIA"</span> <span class="se">\</span>
@@ -130,7 +129,7 @@ world
 
 <p>Finally, to stop the cluster execute the following:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>make stop cluster
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>make stop cluster
 </code></pre>
 </div>
 

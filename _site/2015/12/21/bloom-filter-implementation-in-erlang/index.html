@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
   <link rel="stylesheet" href="/style.css">
   <link rel="alternate" type="application/rss+xml" title="RSS Feed for Eduardo Colabardini" href="/feed.xml" />
-  <!-- Begin Jekyll SEO tag v2.0.0 -->
+  <!-- Begin Jekyll SEO tag v1.4.0 -->
 <title>Bloom filter implementation in Erlang and Redis - Eduardo Colabardini</title>
 <meta property="og:title" content="Bloom filter implementation in Erlang and Redis" />
 <meta name="description" content="A Bloom filter is a space-efficient probabilistic data structure, conceived by Burton Howard Bloom in 1970, that is used to test whether an element is a member of a set Wikipedia." />
@@ -17,6 +17,8 @@
 <meta property="og:site_name" content="Eduardo Colabardini" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2015-12-21T10:31:00-02:00" />
+<link rel="next" href="//ecolabardini.github.io/2016/04/17/riak-docker-strong-consistency/" title="Riak, Docker &amp; Strong Consistency" />
+<link rel="prev" href="//ecolabardini.github.io/2015/12/01/playing-with-multicast-groups-in-java/" title="Playing with multicast groups in Java" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@ecolabardini" />
 <meta name="twitter:creator" content="@Eduardo Colabardini" />
@@ -45,6 +47,53 @@
   <div class="post-date">
     <time>21 Dec 2015</time>
   </div>
+	<p class="post-meta" style="font-size:8">
+		Tags:
+		
+		
+
+
+
+
+
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/bloom filter" class="tag">bloom filter
+		<span>(1)</span>
+	</a>
+</span>
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/docker" class="tag">docker
+		<span>(3)</span>
+	</a>
+</span>
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/eredis" class="tag">eredis
+		<span>(1)</span>
+	</a>
+</span>
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/erlang" class="tag">erlang
+		<span>(1)</span>
+	</a>
+</span>
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/redis" class="tag">redis
+		<span>(1)</span>
+	</a>
+</span>
+
+
+		</p>
   <p>A Bloom filter is a space-efficient probabilistic data structure, conceived by Burton Howard Bloom in 1970, that is used to test whether an element is a member of a set <a href="https://en.wikipedia.org/wiki/Bloom_filter" target="_blank">Wikipedia</a>.</p>
 
 <p>In order to create a Bloom filter, we need a uniformly distributed, independently and fast/eficient hash function. The <code class="highlighter-rouge">erlang:phash2/1,2</code> is a <a href="https://github.com/blackberry/Erlang-OTP/blob/master/erts/emulator/beam/utils.c#L976" target="_blank">BIF</a> of the hash function suggested by <a href="http://www.burtleburtle.net/bob/" target="_blank">Bob Jenkins</a> that satisfies this properties.</p>
@@ -61,7 +110,7 @@
 * <code class="highlighter-rouge">exists/1</code>: check if Element exists using Redis <code class="highlighter-rouge">GETBIT</code> command; 
 * <code class="highlighter-rouge">hash/1</code>: wrapper for <code class="highlighter-rouge">erlang:phash2</code> of the Element converted to binary.</p>
 
-<div class="language-erlang highlighter-rouge"><pre class="highlight"><code><span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">bf</span><span class="p">).</span>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">bf</span><span class="p">).</span>
 <span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">add</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span> <span class="n">exists</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
 <span class="c">% p=0.001 and 2 mi elements
@@ -101,7 +150,7 @@
 
 <p>For the purpose of this example, we’ll install the redis-server on the same machine that our application is running (typically that is not good for production environment). All you need is Docker 1.9.1.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Docker needs sudo</span>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># Docker needs sudo</span>
 sudo -s
 
 <span class="c"># Start erlang docker container</span>
@@ -122,7 +171,7 @@ service redis-server start
 
 <p>With all set, we can start our BF example. Execute this inside the interactive bash provided by the docker container:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Download bf.erl from Amazon S3</span>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># Download bf.erl from Amazon S3</span>
 <span class="nb">cd</span> ~
 wget https://s3-us-west-2.amazonaws.com/ecolabardini/bf.erl
 
@@ -133,7 +182,7 @@ erl -pa /opt/eredis-1.0.8/ebin/
 
 <p>Now you can compile and test the BF freely, for instance:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>c<span class="o">(</span>bf<span class="o">)</span>.
+<div class="highlighter-rouge"><pre class="highlight"><code>c<span class="o">(</span>bf<span class="o">)</span>.
 bf:add<span class="o">(</span><span class="s2">"word1"</span><span class="o">)</span>.
 bf:add<span class="o">(</span><span class="s2">"word2"</span><span class="o">)</span>.
 bf:exists<span class="o">(</span><span class="s2">"word1"</span><span class="o">)</span>.

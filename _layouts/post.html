@@ -11,5 +11,10 @@ layout: default
   <div class="post-date">
     <time>{{ page.date | date_to_string }}</time>
   </div>
+	<p class="post-meta" style="font-size:8">
+		Tags:
+		{% assign tags = page.tags | sort %}
+		{% include tagcloudpost.html %}
+		</p>
   {{ content }}
 </div>

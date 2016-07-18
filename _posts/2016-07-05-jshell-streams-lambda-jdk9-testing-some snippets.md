@@ -92,7 +92,7 @@ Files
   .getAsDouble()
 ~~~
 
-Of course there is simpler and quicker ways to resolve this examples with just ``/bin/bash`` (using grep, sort, awk etc), but the purpose here is that your code can be tested as you create it, and way before you are done with your whole project.
+Of course there are simpler and quicker ways to solve these examples with just ``/bin/bash`` (using grep, sort, awk etc), but the purpose here is that your code can be tested as you create it, and way before you are done with your whole project.
 
 ### References
 

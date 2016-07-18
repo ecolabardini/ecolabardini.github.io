@@ -88,7 +88,7 @@ jshell
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Of course there is simpler and quicker ways to resolve this examples with just &lt;code class=&quot;highlighter-rouge&quot;&gt;/bin/bash&lt;/code&gt; (using grep, sort, awk etc), but the purpose here is that your code can be tested as you create it, and way before you are done with your whole project.&lt;/p&gt;
+&lt;p&gt;Of course there are simpler and quicker ways to solve these examples with just &lt;code class=&quot;highlighter-rouge&quot;&gt;/bin/bash&lt;/code&gt; (using grep, sort, awk etc), but the purpose here is that your code can be tested as you create it, and way before you are done with your whole project.&lt;/p&gt;
 
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 

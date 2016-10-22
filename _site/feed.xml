@@ -310,7 +310,7 @@ bf:exists&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&q
 
 &lt;p&gt;&lt;img src=&quot;../../../../assets/2015-12-20.png&quot; alt=&quot;Bloom Filter execution&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Note that deletion operations on Bloom filters are not allowed. If you do that, there’s a high probability you’ll remove bits that also belong to other elements.&lt;/p&gt;
+&lt;p&gt;Note that deletion operations on Bloom filters are not allowed. If you do that, there’s a high probability you’ll remove bits that also belongs to other elements.&lt;/p&gt;
 
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 

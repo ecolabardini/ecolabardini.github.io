@@ -112,7 +112,7 @@ Print-screen of my execution:
 
 ![Bloom Filter execution](../../../../assets/2015-12-20.png)
  
-Note that deletion operations on Bloom filters are not allowed. If you do that, there’s a high probability you’ll remove bits that also belong to other elements.
+Note that deletion operations on Bloom filters are not allowed. If you do that, there’s a high probability you’ll remove bits that also belongs to other elements.
  
 ### References
 

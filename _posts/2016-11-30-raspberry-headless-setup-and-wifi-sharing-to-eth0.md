@@ -14,7 +14,7 @@ tags:
 This is a step-by-step guide of how to set up your Raspberry Pi to run "headless", that is, access it via a network connection without a keyboard or display. This guide uses Raspbian, the "Debian Jessie" version of Linux, but it should work with other versions.
 
 
-Download the lastest Raspian image and unzip it:
+Download the latest Raspian image and unzip it:
 
 ~~~ bash
 wget https://downloads.raspberrypi.org/raspbian_latest -O raspbian.zip

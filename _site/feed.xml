@@ -9,7 +9,7 @@
 				<title>Raspberry Pi headless setup &amp; Wi-Fi sharing to ethernet</title>
         <description>&lt;p&gt;This is a step-by-step guide of how to set up your Raspberry Pi to run “headless”, that is, access it via a network connection without a keyboard or display. This guide uses Raspbian, the “Debian Jessie” version of Linux, but it should work with other versions.&lt;/p&gt;
 
-&lt;p&gt;Download the lastest Raspian image and unzip it:&lt;/p&gt;
+&lt;p&gt;Download the latest Raspian image and unzip it:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://downloads.raspberrypi.org/raspbian_latest -O raspbian.zip
 unzip raspbian.zip
@@ -89,6 +89,7 @@ unzip raspbian.zip
   &lt;li&gt;&lt;a href=&quot;https://www.raspberrypi.org/forums/viewtopic.php?t=74176&quot; target=&quot;_blank&quot;&gt;Headless setup: no keyboard, display or frustration
 &lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
 </description>
 				<pubDate>Wed, 30 Nov 2016 00:47:00 -0200</pubDate>
 				<link>//ecolabardini.github.io/2016/11/30/raspberry-headless-setup-and-wifi-sharing-to-eth0/</link>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Raspberry Pi headless setup & Wi-Fi sharing to ethernet</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="alternate" type="application/rss+xml" title="RSS Feed for Eduardo Colabardini" href="/feed.xml" />
+  <!-- Begin Jekyll SEO tag v1.4.0 -->
+<title>Raspberry Pi headless setup &amp; Wi-Fi sharing to ethernet - Eduardo Colabardini</title>
+<meta property="og:title" content="Raspberry Pi headless setup &amp; Wi-Fi sharing to ethernet" />
+<meta name="description" content="This is a step-by-step guide of how to set up your Raspberry Pi to run “headless”, that is, access it via a network connection without a keyboard or display. This guide uses Raspbian, the “Debian Jessie” version of Linux, but it should work with other versions." />
+<meta property="og:description" content="This is a step-by-step guide of how to set up your Raspberry Pi to run “headless”, that is, access it via a network connection without a keyboard or display. This guide uses Raspbian, the “Debian Jessie” version of Linux, but it should work with other versions." />
+<link rel="canonical" href="//ecolabardini.github.io/2016/11/30/raspberry-headless-setup-and-wifi-sharing-to-eth0/" />
+<meta property="og:url" content="//ecolabardini.github.io/2016/11/30/raspberry-headless-setup-and-wifi-sharing-to-eth0/" />
+<meta property="og:site_name" content="Eduardo Colabardini" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-11-30T00:47:00-02:00" />
+<link rel="prev" href="//ecolabardini.github.io/2016/07/05/jshell-streams-lambda-jdk9-testing-some-snippets/" title="JShell, Streams, Lambda, JDK9 - Testing some snippets!" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@ecolabardini" />
+<meta name="twitter:creator" content="@Eduardo Colabardini" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Raspberry Pi headless setup &amp; Wi-Fi sharing to ethernet",
+    "datePublished": "2016-11-30T00:47:00-02:00",
+    "description": "This is a step-by-step guide of how to set up your Raspberry Pi to run “headless”, that is, access it via a network connection without a keyboard or display. This guide uses Raspbian, the “Debian Jessie” version of Linux, but it should work with other versions.",
+    "url": "//ecolabardini.github.io/2016/11/30/raspberry-headless-setup-and-wifi-sharing-to-eth0/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+  
+</head>
+<body>
+  <div class="container">
+    <header class="masthead">
+  <h1 class="masthead-title--small">
+    <a href="/">Eduardo Colabardini</a>
+  </h1>
+</header>
+<div class="content post">
+  <h1 class="post-title">Raspberry Pi headless setup & Wi-Fi sharing to ethernet</h1>
+  <div class="post-date">
+    <time>30 Nov 2016</time>
+  </div>
+	<p class="post-meta" style="font-size:8">
+		Tags:
+		
+		
+
+
+
+
+
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/ethernet" class="tag">ethernet
+		<span>(1)</span>
+	</a>
+</span>
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/headless" class="tag">headless
+		<span>(1)</span>
+	</a>
+</span>
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/raspberry pi" class="tag">raspberry pi
+		<span>(1)</span>
+	</a>
+</span>
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/raspbian" class="tag">raspbian
+		<span>(1)</span>
+	</a>
+</span>
+
+
+<span style="white-space: nowrap; padding: 0.4em;">
+	<a href="/tags/wifi sharing" class="tag">wifi sharing
+		<span>(1)</span>
+	</a>
+</span>
+
+
+		</p>
+  <p>This is a step-by-step guide of how to set up your Raspberry Pi to run “headless”, that is, access it via a network connection without a keyboard or display. This guide uses Raspbian, the “Debian Jessie” version of Linux, but it should work with other versions.</p>
+
+<p>Download the lastest Raspian image and unzip it:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>wget https://downloads.raspberrypi.org/raspbian_latest -O raspbian.zip
+unzip raspbian.zip
+</code></pre>
+</div>
+
+<p>Insert you SD Card and discover the mounted partitions (usually starts with <code class="highlighter-rouge">/dev/mmcblk0</code>).</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo mount
+/dev/sda11 on /home <span class="nb">type </span>ext4 <span class="o">(</span>rw<span class="o">)</span>
+/dev/sda1 on /boot/efi <span class="nb">type </span>vfat <span class="o">(</span>rw<span class="o">)</span>
+…
+/dev/mmcblk0p2 on /media/dudu/402bfe3d-37db-48a7-a515-31edccf953df <span class="nb">type </span>ext4 <span class="o">(</span>ro,nosuid,nodev,uhelper<span class="o">=</span>udisks2<span class="o">)</span>
+/dev/mmcblk0p1 on /media/dudu/boot <span class="nb">type </span>vfat <span class="o">(</span>ro,nosuid,nodev,uid<span class="o">=</span>1000,gid<span class="o">=</span>1000,shortname<span class="o">=</span>mixed,dmask<span class="o">=</span>0077,utf8<span class="o">=</span>1,showexec,flush,uhelper<span class="o">=</span>udisks2<span class="o">)</span>
+</code></pre>
+</div>
+
+<p>And umount them:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo umount /dev/mmcblk0p1
+<span class="gp">$ </span>sudo umount /dev/mmcblk0p2
+</code></pre>
+</div>
+
+<p>Write the Raspbian image to your SD Card (there’s no need to specify the partition at the <code class="highlighter-rouge">of</code> parameter since they’ll be created again):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo dd <span class="nv">bs</span><span class="o">=</span>1M <span class="k">if</span><span class="o">=</span>./raspbian.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk0
+4147+0 records <span class="k">in
+</span>4147+0 records out
+4348444672 bytes <span class="o">(</span>4,3 GB<span class="o">)</span> copied, 318,742 s, 13,6 MB/s
+
+<span class="gp">$ </span>sync
+</code></pre>
+</div>
+
+<p>If you have access to your router/hub then you can connect the ethernet cable directly to it and the Raspberry Pi will automatically be configured through DHCP. If you don’t have physical access to the router you can share your Wi-Fi connection to ethernet following the steps below.</p>
+
+<p>Open your <code class="highlighter-rouge">Network Connections</code>, edit the <code class="highlighter-rouge">Wired Connection</code> and under <code class="highlighter-rouge">IPv4 Settings</code> select the method <code class="highlighter-rouge">Shared to other computers</code>.</p>
+
+<p><img src="../../../../assets/2016-11-30_1.png" alt="Sharing internet to ethernet" /></p>
+
+<p>Now insert your SD Card at the Raspberry Pi and power it up!</p>
+
+<p><img src="../../../../assets/2016-11-30_2.png" alt="Raspberry PI" title="Raspberry Pi" /></p>
+
+<p>Wait for a while and check that a new IP is being announced on eth0 (in my case the 10.42.0.75)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>arp -a
+<span class="o">(</span>192.168.0.122<span class="o">)</span> at 9c:d2:1e:06:c7:f6 <span class="o">[</span>ether] on wlan0
+<span class="o">(</span>192.168.0.1<span class="o">)</span> at c8:3a:35:19:88:10 <span class="o">[</span>ether] on wlan0
+<span class="o">(</span>192.168.0.101<span class="o">)</span> at 6c:ad:f8:b2:c6:c2 <span class="o">[</span>ether] on wlan0
+
+<span class="gp">$ </span>arp -a
+<span class="o">(</span>192.168.0.122<span class="o">)</span> at 9c:d2:1e:06:c7:f6 <span class="o">[</span>ether] on wlan0
+<span class="o">(</span>192.168.0.1<span class="o">)</span> at c8:3a:35:19:88:10 <span class="o">[</span>ether] on wlan0
+<span class="o">(</span>10.42.0.75<span class="o">)</span> at b8:27:eb:98:8e:e3 <span class="o">[</span>ether] on eth0
+<span class="o">(</span>192.168.0.101<span class="o">)</span> at 6c:ad:f8:b2:c6:c2 <span class="o">[</span>ether] on wlan0
+</code></pre>
+</div>
+
+<p>Finally you can establish a SSH connection using the default username <code class="highlighter-rouge">pi</code> and password <code class="highlighter-rouge">raspberry</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>ssh pi@10.42.0.75
+</code></pre>
+</div>
+
+<p>And check your network connection:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>curl https://google.com
+</code></pre>
+</div>
+
+<p>Enjoy your Raspberry Pi ;-)</p>
+
+<h3 id="references">References</h3>
+<ul>
+  <li><a href="https://www.raspberrypi.org/forums/viewtopic.php?t=74176" target="_blank">Headless setup: no keyboard, display or frustration
+</a></li>
+</ul>
+
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+
+(function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//ecolabardini.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                    
+
+  </div>
+</body>
+</html>

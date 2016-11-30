@@ -49,11 +49,11 @@ unzip raspbian.zip
 
 &lt;p&gt;Open your &lt;code class=&quot;highlighter-rouge&quot;&gt;Network Connections&lt;/code&gt;, edit the &lt;code class=&quot;highlighter-rouge&quot;&gt;Wired Connection&lt;/code&gt; and under &lt;code class=&quot;highlighter-rouge&quot;&gt;IPv4 Settings&lt;/code&gt; select the method &lt;code class=&quot;highlighter-rouge&quot;&gt;Shared to other computers&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../../../../assets/2016-12-01_1.png&quot; alt=&quot;Sharing internet to ethernet&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../../../assets/2016-11-30_1.png&quot; alt=&quot;Sharing internet to ethernet&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Now insert your SD Card at the Raspberry Pi and power it up!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../../../../assets/2016-12-01_2.png&quot; alt=&quot;Raspberry PI&quot; title=&quot;Raspberry Pi&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../../../assets/2016-11-30_2.png&quot; alt=&quot;Raspberry PI&quot; title=&quot;Raspberry Pi&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Wait for a while and check that a new IP is being announced on eth0 (in my case the 10.42.0.75)&lt;/p&gt;
 
@@ -90,9 +90,9 @@ unzip raspbian.zip
 &lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-				<pubDate>Sat, 26 Nov 2016 22:52:00 -0200</pubDate>
-				<link>//ecolabardini.github.io/2016/11/26/raspberry-headless-setup-and-wifi-sharing-to-eth0/</link>
-				<guid isPermaLink="true">//ecolabardini.github.io/2016/11/26/raspberry-headless-setup-and-wifi-sharing-to-eth0/</guid>
+				<pubDate>Wed, 30 Nov 2016 00:47:00 -0200</pubDate>
+				<link>//ecolabardini.github.io/2016/11/30/raspberry-headless-setup-and-wifi-sharing-to-eth0/</link>
+				<guid isPermaLink="true">//ecolabardini.github.io/2016/11/30/raspberry-headless-setup-and-wifi-sharing-to-eth0/</guid>
 			</item>
 		
 			<item>

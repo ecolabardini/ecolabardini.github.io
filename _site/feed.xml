@@ -76,9 +76,10 @@ unzip raspbian.zip
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;And check your network connection:&lt;/p&gt;
+&lt;p&gt;Check your network connection:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl https://google.com
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;nc -vz ecolabardini.github.io 443
+Connection to ecolabardini.github.io 443 port &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;tcp/https] succeeded!
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 

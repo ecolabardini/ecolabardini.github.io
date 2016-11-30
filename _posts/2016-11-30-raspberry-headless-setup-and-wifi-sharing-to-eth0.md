@@ -81,10 +81,11 @@ Finally you can establish a SSH connection using the default username ``pi`` and
 $ ssh pi@10.42.0.75
 ~~~
 
-And check your network connection:
+Check your network connection:
 
 ~~~ bash
-curl https://google.com
+$ nc -vz ecolabardini.github.io 443
+Connection to ecolabardini.github.io 443 port [tcp/https] succeeded!
 ~~~
 
 Enjoy your Raspberry Pi ;-)

@@ -104,11 +104,14 @@
 
 <p>It’s a good idea (or a must if you are designing production ready distributed systems) to maintain the Bloom filter easy accessible for a cluster. For this, we’ll use <a href="http://redis.io/" target="_blank">Redis</a> (an in-memory data structure store) and <a href="https://github.com/wooga/eredis" target="_blank">wooga/eredis</a> (Erlang Redis Client). Redis already have operations like <a href="http://redis.io/commands/SETBIT" target="_blank">SETBIT</a> and <a href="http://redis.io/commands/GETBIT" target="_blank">GETBIT</a> on a key at a specified position.</p>
 
-<p>In the code below, you can check the implemented functions:
-* <code class="highlighter-rouge">positions/1</code>: returns a list with <code class="highlighter-rouge">K=10</code> different hashes based on the Element + increment; 
-* <code class="highlighter-rouge">add/1</code>: add Element using Redis <code class="highlighter-rouge">SETBIT</code> command; 
-* <code class="highlighter-rouge">exists/1</code>: check if Element exists using Redis <code class="highlighter-rouge">GETBIT</code> command; 
-* <code class="highlighter-rouge">hash/1</code>: wrapper for <code class="highlighter-rouge">erlang:phash2</code> of the Element converted to binary.</p>
+<p>In the code below, you can check the implemented functions:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">positions/1</code>: returns a list with <code class="highlighter-rouge">K=10</code> different hashes based on the Element + increment;</li>
+  <li><code class="highlighter-rouge">add/1</code>: add Element using Redis <code class="highlighter-rouge">SETBIT</code> command;</li>
+  <li><code class="highlighter-rouge">exists/1</code>: check if Element exists using Redis <code class="highlighter-rouge">GETBIT</code> command;</li>
+  <li><code class="highlighter-rouge">hash/1</code>: wrapper for <code class="highlighter-rouge">erlang:phash2</code> of the Element converted to binary.</li>
+</ul>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">bf</span><span class="p">).</span>
 <span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">add</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span> <span class="n">exists</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>

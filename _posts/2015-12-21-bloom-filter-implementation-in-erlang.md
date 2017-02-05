@@ -22,6 +22,7 @@ Let’s say we have 2 million elements and can live with a ``0.001`` probability
 It’s a good idea (or a must if you are designing production ready distributed systems) to maintain the Bloom filter easy accessible for a cluster. For this, we’ll use [Redis](http://redis.io/){:target="_blank"} (an in-memory data structure store) and [wooga/eredis](https://github.com/wooga/eredis){:target="_blank"} (Erlang Redis Client). Redis already have operations like [SETBIT](http://redis.io/commands/SETBIT){:target="_blank"} and [GETBIT](http://redis.io/commands/GETBIT){:target="_blank"} on a key at a specified position.
 
 In the code below, you can check the implemented functions:
+
 * ``positions/1``: returns a list with ``K=10`` different hashes based on the Element + increment; 
 * ``add/1``: add Element using Redis ``SETBIT`` command; 
 * ``exists/1``: check if Element exists using Redis ``GETBIT`` command; 

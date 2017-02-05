@@ -311,11 +311,14 @@ world
 
 &lt;p&gt;It’s a good idea (or a must if you are designing production ready distributed systems) to maintain the Bloom filter easy accessible for a cluster. For this, we’ll use &lt;a href=&quot;http://redis.io/&quot; target=&quot;_blank&quot;&gt;Redis&lt;/a&gt; (an in-memory data structure store) and &lt;a href=&quot;https://github.com/wooga/eredis&quot; target=&quot;_blank&quot;&gt;wooga/eredis&lt;/a&gt; (Erlang Redis Client). Redis already have operations like &lt;a href=&quot;http://redis.io/commands/SETBIT&quot; target=&quot;_blank&quot;&gt;SETBIT&lt;/a&gt; and &lt;a href=&quot;http://redis.io/commands/GETBIT&quot; target=&quot;_blank&quot;&gt;GETBIT&lt;/a&gt; on a key at a specified position.&lt;/p&gt;
 
-&lt;p&gt;In the code below, you can check the implemented functions:
-* &lt;code class=&quot;highlighter-rouge&quot;&gt;positions/1&lt;/code&gt;: returns a list with &lt;code class=&quot;highlighter-rouge&quot;&gt;K=10&lt;/code&gt; different hashes based on the Element + increment; 
-* &lt;code class=&quot;highlighter-rouge&quot;&gt;add/1&lt;/code&gt;: add Element using Redis &lt;code class=&quot;highlighter-rouge&quot;&gt;SETBIT&lt;/code&gt; command; 
-* &lt;code class=&quot;highlighter-rouge&quot;&gt;exists/1&lt;/code&gt;: check if Element exists using Redis &lt;code class=&quot;highlighter-rouge&quot;&gt;GETBIT&lt;/code&gt; command; 
-* &lt;code class=&quot;highlighter-rouge&quot;&gt;hash/1&lt;/code&gt;: wrapper for &lt;code class=&quot;highlighter-rouge&quot;&gt;erlang:phash2&lt;/code&gt; of the Element converted to binary.&lt;/p&gt;
+&lt;p&gt;In the code below, you can check the implemented functions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;positions/1&lt;/code&gt;: returns a list with &lt;code class=&quot;highlighter-rouge&quot;&gt;K=10&lt;/code&gt; different hashes based on the Element + increment;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;add/1&lt;/code&gt;: add Element using Redis &lt;code class=&quot;highlighter-rouge&quot;&gt;SETBIT&lt;/code&gt; command;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;exists/1&lt;/code&gt;: check if Element exists using Redis &lt;code class=&quot;highlighter-rouge&quot;&gt;GETBIT&lt;/code&gt; command;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;hash/1&lt;/code&gt;: wrapper for &lt;code class=&quot;highlighter-rouge&quot;&gt;erlang:phash2&lt;/code&gt; of the Element converted to binary.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;export&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exists&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]).&lt;/span&gt;

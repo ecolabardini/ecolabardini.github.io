@@ -8,7 +8,7 @@
 
     <a href="/" class="pagination-item {% if paginator.page == 1 %} pagination-selected {%endif%}">{{ 1 }}</a>
     {% for pageCounter in (2..paginator.total_pages) %}
-        <a href="{{ site.url }}{{ site.baseurl }}blog/page{{pageCounter}}" class="pagination-item {% if pageCounter == paginator.page %} pagination-selected {%endif%}">
+        <a href="{{ site.url }}{{ site.baseurl }}/blog/page{{pageCounter}}" class="pagination-item {% if pageCounter == paginator.page %} pagination-selected {%endif%}">
             {{ pageCounter }}
         </a>
     {% endfor %}

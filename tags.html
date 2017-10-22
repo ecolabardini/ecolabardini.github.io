@@ -1,13 +1,22 @@
 ---
 layout: page
 title: Tags
-permalink: /tags/
+permalink: /tags/ 
 ---
 
-<div class="home">
-	<p class="post-meta" style="text-align: justify;">
-	{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
-	{% assign tags = site_tags | split:',' | sort %}
-	{% include tagcloud.html %}
-	</p>
-</div>
+{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign site_tags = site_tags | split: ',' %}
+
+{% for tag in site_tags %}
+
+    <h4 id="{{ tag }}">{{ tag }}</h4>
+
+    <ul>
+        {% for post in site.tags[tag] %}
+        <li>
+            {{ post.date | date: "%B %d, %Y" }}: <a href="{{ post.url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endfor %}

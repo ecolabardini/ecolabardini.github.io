@@ -1,0 +1,21 @@
+<!-- Pagination links -->
+<div class="pagination">
+    {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path }}" class="previous"><<</a>
+    {% else %}
+      <span class="previous"><<</span>
+    {% endif %}
+
+    <a href="/" class="pagination-item {% if paginator.page == 1 %} pagination-selected {%endif%}">{{ 1 }}</a>
+    {% for pageCounter in (2..paginator.total_pages) %}
+        <a href="{{site.baseurl}}/blog/page{{pageCounter}}" class="pagination-item {% if pageCounter == paginator.page %} pagination-selected {%endif%}">
+            {{ pageCounter }}
+        </a>
+    {% endfor %}
+    
+    {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path }}" class="next">>></a>
+    {% else %}
+      <span class="next ">>></span>
+    {% endif %}
+</div>

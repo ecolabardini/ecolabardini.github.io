@@ -35,6 +35,8 @@ This way you need to generate offline tags: `ruby _gentags.rb`
 
 `twitter/github/linkedin`: your username
 
+`google_analytics`: your tracking id
+
 # More info
 
 Host your website free with GitHub Pages: https://pages.github.com/

@@ -10,6 +10,8 @@ tags:
 ---
 Multicast (one-to-many or many-to-many distribution) is group communication where information is addressed to a group of destination computers simultaneously ([Wikipedia](https://en.wikipedia.org/wiki/Multicast){:target="_blank"}).
 
+<!-- more -->
+
 UDP is the most common protocol used to broadcast/multicast messages. It’s important to say that it is a best effort protocol with no delivery guarantees, order or duplicate protection, so you need to design your application aware of it.
 
 [Reliable musticast](https://en.wikipedia.org/wiki/Reliable_multicast){:target="_blank"} can be implemented on top of the UDP protocol by some middleware applications.
@@ -46,8 +48,8 @@ public class SenderThread extends Thread {
           MulticastSocket socket = new MulticastSocket();
           socket.setTimeToLive(1);
           byte[] buf = message.getBytes();
-          DatagramPacket pack = 
-            new DatagramPacket(buf, buf.length, 
+          DatagramPacket pack =
+            new DatagramPacket(buf, buf.length,
               InetAddress.getByName(Config.group), Config.port);
           socket.send(pack);
           socket.close();
@@ -63,7 +65,7 @@ public class SenderThread extends Thread {
 
 The ``ReceiverThread`` class is always listening for packages on the same multicast address. If the package contains the ``bytes`` corresponding to ``"hi"``, then the sender IP address is added to a ``Map`` (key=IP address, value=current time in miliseconds).
 
-As packages are received, the ``ReceiverThread`` prints the list of available hosts. The ``getAvailableHosts`` method calculates for each host if the last ``"hi"`` message is older than 10 seconds, if it is then the host is removed from the Map (i.e. the host is no longer available - a network outage, a shutdown or a crash happened, for instance). 
+As packages are received, the ``ReceiverThread`` prints the list of available hosts. The ``getAvailableHosts`` method calculates for each host if the last ``"hi"`` message is older than 10 seconds, if it is then the host is removed from the Map (i.e. the host is no longer available - a network outage, a shutdown or a crash happened, for instance).
 
 ~~~java
 package com.github.ecolabardini.example;
@@ -87,25 +89,25 @@ public class ReceiverThread extends Thread {
     try {
       MulticastSocket socket = new MulticastSocket(Config.port);
       socket.joinGroup(InetAddress.getByName(Config.group));
-        
+
       while (!isInterrupted()) {
         byte buf[] = new byte[1024];
         DatagramPacket pack = new DatagramPacket(buf, buf.length);
         socket.receive(pack);
-              
-        String message = 
+
+        String message =
           new String(pack.getData(), 0, pack.getLength());
-          
+
         if (message.equals("hi")) {
           hosts.put(
-            pack.getAddress().getHostAddress(), 
+            pack.getAddress().getHostAddress(),
             System.currentTimeMillis()
           );
         }
-        
+
         System.out.println(getAvailableHosts());
       }
-          
+
       socket.leaveGroup(InetAddress.getByName(Config.group));
       socket.close();
     } catch (IOException e) {
@@ -123,7 +125,7 @@ public class ReceiverThread extends Thread {
         hostsToRemove.add(entry.getKey());
       }
     }
-      
+
     for (String host : hostsToRemove) hosts.remove(host);
     return hosts.keySet();
   }

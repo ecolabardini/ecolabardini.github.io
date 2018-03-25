@@ -3,7 +3,7 @@ layout: post
 title: JShell, Streams, Lambda, JDK9 - Testing some snippets!
 date: '2016-07-05T10:00:00.005-03:00'
 author: Eduardo Colabardini
-tags: 
+tags:
 - java
 - jshell
 - jdk9
@@ -11,7 +11,9 @@ tags:
 - lambda
 ---
 
-Java 9 introduces JShell and a Read-Eval-Print Loop ([REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop){:target="_blank"}) for the Java Programming Language. [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop){:target="_blank"} allows you to evaluate code snippets such as declarations, statements, expressions. 
+Java 9 introduces JShell and a Read-Eval-Print Loop ([REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop){:target="_blank"}) for the Java Programming Language. [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop){:target="_blank"} allows you to evaluate code snippets such as declarations, statements, expressions.
+
+<!-- more -->
 
 I created a [docker image](https://github.com/ecolabardini/docker-jshell){:target="_blank"} with JDK9 so we can execute some examples:
 

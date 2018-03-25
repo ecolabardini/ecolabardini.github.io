@@ -13,6 +13,7 @@ tags:
 
 This is a step-by-step guide of how to set up your Raspberry Pi to run "headless", that is, access it via a network connection without a keyboard or display. This guide uses Raspbian, the "Debian Jessie" version of Linux, but it should work with other versions.
 
+<!-- more -->
 
 Download the latest Raspian image and unzip it:
 
@@ -54,7 +55,7 @@ If you have access to your router/hub then you can connect the ethernet cable di
 
 Open your ``Network Connections``, edit the ``Wired Connection`` and under ``IPv4 Settings`` select the method ``Shared to other computers``.
 
-![Sharing internet to ethernet](../../../../assets/2016-11-30_1.png) 
+![Sharing internet to ethernet](../../../../assets/2016-11-30_1.png)
 
 Now insert your SD Card at the Raspberry Pi and power it up!
 
@@ -93,4 +94,3 @@ Enjoy your Raspberry Pi ;-)
 ### References
 * [Headless setup: no keyboard, display or frustration
 ](https://www.raspberrypi.org/forums/viewtopic.php?t=74176){:target="_blank"}
-

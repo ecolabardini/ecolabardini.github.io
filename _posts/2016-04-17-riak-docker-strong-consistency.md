@@ -3,7 +3,7 @@ layout: post
 title: Riak, Docker & Strong Consistency
 date: '2016-04-17T19:49:00.005-03:00'
 author: Eduardo Colabardini
-tags: 
+tags:
 - riak
 - strong consistency
 - nosql
@@ -11,6 +11,8 @@ tags:
 ---
 
 Riak is a distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability. Riak implements the principles from [Amazon's Dynamo paper](http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf){:target="_blank"} with heavy influence from the [CAP](https://en.wikipedia.org/wiki/CAP_Theorem){:target="_blank"} theorem. ([Wikipedia](https://en.wikipedia.org/wiki/Riak){:target="_blank"})
+
+<!-- more -->
 
 Riak allows you to create buckets that provide [strong consistency](http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/){:target="_blank"} guarantees for the data stored within them, enabling you to use Riak as a CP system (consistent plus partition tolerant) for all of the data in that bucket. You can store just some of your data in strongly consistent buckets or all of your data, depending on your use case. Strong consistency was added to complement Riak's standard [eventually consistent](https://en.wikipedia.org/wiki/Eventual_consistency){:target="_blank"}, high availability mode. ([Basho](http://docs.basho.com/riak/kv/2.1.4/developing/app-guide/strong-consistency/){:target="_blank"})
 
@@ -42,7 +44,7 @@ Connect to a Riak Docker instance to create a strongly consistent bucket type:
 
 ~~~ bash
 docker exec -it riak01 bash
-riak-admin bucket-type create strongly_consistent \ 
+riak-admin bucket-type create strongly_consistent \
   '{"props":{"consistent":true}}'
 riak-admin bucket-type activate strongly_consistent
 ~~~
@@ -59,17 +61,17 @@ curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello \
 < HTTP/1.1 204 No Content
 ~~~
 
-Fetching the key "hello" from another Riak node: 
+Fetching the key "hello" from another Riak node:
 
 ~~~ bash
 curl -v 172.17.0.3:8098/types/strongly_consistent/buckets/test/keys/hello
 
-< HTTP/1.1 200 OK 
+< HTTP/1.1 200 OK
 < X-Riak-Vclock: a85hYGBgzGBKYWBJLU4tzGDKY2XgZwQKAendfh0X+LIA
 world
 ~~~
 
-Strongly consistent buckets cannot allow siblings by definition, and so all writes to existing keys must include a context with the object. If you attempt a write to a non-empty key without including causal context, you will receive the following error: 
+Strongly consistent buckets cannot allow siblings by definition, and so all writes to existing keys must include a context with the object. If you attempt a write to a non-empty key without including causal context, you will receive the following error:
 
 ~~~ bash
 curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello \
@@ -77,7 +79,7 @@ curl -v 172.17.0.2:8098/types/strongly_consistent/buckets/test/keys/hello \
   -H "Content-type: text/plain" \
   -d "hell"
 
-< HTTP/1.1 412 Precondition Failed 
+< HTTP/1.1 412 Precondition Failed
 ~~~
 
 Update using context (X-Riak-Vclock header):

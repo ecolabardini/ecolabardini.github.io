@@ -30,5 +30,7 @@ _______________________________________
          \____\______/  
 ~~~
 
+<!-- more -->
+
 ### References
 * [Get Started with Docker Engine for Linux, Docker Documentation](http://docs.docker.com/linux/started/){:target="_blank"}

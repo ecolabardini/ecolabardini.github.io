@@ -29,12 +29,14 @@ email_icon_footer: true
 disqus:
     shortname: ecolabardini
 
-google_analytics:   "UA-80121720-1"
+google_analytics: "UA-80121720-1"
 
 paginate: 4
 paginate_path: "/blog/page:num/"
 
 permalink: /:year/:month/:day/:title/
+
+excerpt_separator: "<!-- more -->"
 
 # Build settings
 markdown: kramdown

@@ -18,6 +18,8 @@ So, how do you plan on versioning your web-services?
 
 This is crucial today, when you business logic is changing all the time and you have to add new fields, parameters, validations and so on. But how to do this without breaking products that already depend upon your API?
 
+<!-- more -->
+
 There are some simple ways to accomplish this:
 
 * Add the version on you URL path: <http://www.example.com/api/v2/user>
@@ -65,7 +67,7 @@ public class UserRest {
     @Path("/{id}")
     @Produces(MediaType.TEXT_PLAIN)
     public String getUser(@PathParam("id") String id) {
-        return this.getClass().getPackage().getName() + 
+        return this.getClass().getPackage().getName() +
         	": Hi, I'm user with ID " + id;
     }
 }

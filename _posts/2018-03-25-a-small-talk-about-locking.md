@@ -150,7 +150,7 @@ The point here is:
 
 ## Conclusion
 
-Understand your needs. Relational databases are a long standing technology and very accurate way of handling all these problems. On the other side, probably with a higher cost but higher performance, availability and so on, are distributed systems and distributed data stores, handling problems in a very different way. `Keep studying!`
+Understand your needs. Relational databases are a long standing technology and a very accurate way of handling all of these problems. On the other side, probably with a higher cost but higher performance, availability and so on, are distributed systems and distributed data stores, handling problems in a very different way. `Keep studying!`
 
 ## References
 * [MySQL 5.7 Reference Manual - Locking Reads](https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html){:target="_blank"}

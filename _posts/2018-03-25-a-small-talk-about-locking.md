@@ -109,7 +109,7 @@ Redis is an in-memory database with lots ready-to-use data structures and algori
 
 **[How to coordinate distributed work with MySQL's GET_LOCK](https://www.xaprb.com/blog/2006/07/26/how-to-coordinate-distributed-work-with-mysqls-get_lock/){:target="_blank"}**
 
-A very good article by [Baron Schwartz](https://www.xaprb.com/){:target="_blank"}, co-author of [High Performance MySQL](http://shop.oreilly.com/product/0636920022343.do){:target="_blank"} (published by O'Reilly Media) talking about a MySQL function called [GET_LOCK](https://dev.mysql.com/doc/refman/5.7/en/miscellaneous-functions.html#function_get-lock){:target="_blank"} capable of locking a user defined string. Of course you should not use this to lock rows (MySQL already does that very well) but probably to lock external resources.
+A very good article by [Baron Schwartz](https://www.xaprb.com/){:target="_blank"}, co-author of [High Performance MySQL](http://shop.oreilly.com/product/0636920022343.do){:target="_blank"} (published by O'Reilly Media) talking about a MySQL function called [GET_LOCK](https://dev.mysql.com/doc/refman/5.7/en/miscellaneous-functions.html#function_get-lock){:target="_blank"} capable of locking an user defined string. Of course you should not use this to lock rows (MySQL already does that very well) but probably to lock external resources.
 
 **[How to do distributed locking](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html){:target="_blank"}**
 

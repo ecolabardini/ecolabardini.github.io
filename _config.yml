@@ -39,6 +39,7 @@ permalink: /:year/:month/:day/:title/
 excerpt_separator: "<!-- more -->"
 
 # Build settings
+future: true
 markdown: kramdown
 theme: minima
 plugins:

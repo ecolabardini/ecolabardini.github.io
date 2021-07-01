@@ -18,21 +18,21 @@ jobs:
     steps:
     
       - name: Checks-out my blog (ecolabardini/ecolabardini.github.io)
-        - uses: actions/checkout@v2
-          with:
-            path: ecolabardini.github.io
+        uses: actions/checkout@v2
+        with:
+          path: ecolabardini.github.io
 
       - name: Checks-out loconotion (ecolabardini/loconotion) (notion.so parse)
-        - uses: actions/checkout@v2
-          with:
-            repository: ecolabardini/loconotion
-            path: loconotion
+        uses: actions/checkout@v2
+        with:
+          repository: ecolabardini/loconotion
+          path: loconotion
 
       - name: Checks-out my personal loconotion conf (ecolabardini/loconotion-conf)
-        - uses: actions/checkout@v2
-          with:
-            repository: ecolabardini/loconotion-conf
-            path: loconotion-conf
+        uses: actions/checkout@v2
+        with:
+          repository: ecolabardini/loconotion-conf
+          path: loconotion-conf
 
       - name: Generate blog (docker-compose)
         run: |

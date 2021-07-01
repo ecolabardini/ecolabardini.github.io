@@ -55,6 +55,7 @@ jobs:
           cd ecolabardini.github.io/
           git config --local user.email "eduardocolabardini@gmail.com"
           git config --local user.name "[ga-bot] Eduardo Colabardini"
+          git add --all
           git commit -am "Update blog files"
 
       - name: Push changes

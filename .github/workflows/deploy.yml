@@ -48,7 +48,7 @@ jobs:
           docker-compose build loconotion
           export LOCONOTION_LOCAL_DIST="${PWD}"
           sudo -E docker-compose run loconotion website-conf/config.toml
-          mv website/* ../ecolabardini.github.io/
+          sudo mv website/* ../ecolabardini.github.io/
 
       - name: Commit Blog Files at ecolabardini.github.io
         run: |

@@ -13,8 +13,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     
+    runs-on: ubuntu-latest
+    environment: github-pages
+
     steps:
     
       - name: Checks-out my blog (ecolabardini/ecolabardini.github.io)
@@ -23,7 +25,7 @@ jobs:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
           path: ecolabardini.github.io
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Checks-out loconotion (ecolabardini/loconotion) (notion.so parse)
         uses: actions/checkout@v2
@@ -59,4 +61,4 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           directory: ecolabardini.github.io
-          github_token: ${{ secrets.TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}

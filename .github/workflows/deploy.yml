@@ -43,13 +43,13 @@ jobs:
           docker-compose build loconotion
           export LOCONOTION_LOCAL_DIST="${PWD}"
           sudo -E docker-compose run loconotion website-conf/config.toml
+          mv website/* ../ecolabardini.github.io/
 
       - name: Commit Blog Files at ecolabardini.github.io
         run: |
-          mv loconotion/website/* ecolabardini.github.io/
+          cd ecolabardini.github.io/
           git config --local user.email "eduardocolabardini@gmail.com"
-          git config --local user.name "[ga-bot] Eduardo Colabardini"  
-          cd ecolabardini.github.io
+          git config --local user.name "[ga-bot] Eduardo Colabardini"
           git commit -am "Update blog files"
 
       - name: Push changes

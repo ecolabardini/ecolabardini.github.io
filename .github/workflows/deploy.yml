@@ -27,12 +27,14 @@ jobs:
       - name: Checks-out loconotion (ecolabardini/loconotion) (notion.so parse)
         uses: actions/checkout@v2
         with:
+          persist-credentials: false
           repository: ecolabardini/loconotion
           path: loconotion
 
       - name: Checks-out my personal loconotion conf (ecolabardini/loconotion-conf)
         uses: actions/checkout@v2
         with:
+          persist-credentials: false
           repository: ecolabardini/loconotion-conf
           path: loconotion-conf
 
